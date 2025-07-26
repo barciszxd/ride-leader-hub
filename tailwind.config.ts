@@ -26,7 +26,8 @@ export default {
 				foreground: 'hsl(var(--foreground))',
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))'
+					foreground: 'hsl(var(--primary-foreground))',
+					glow: 'hsl(var(--primary-glow))'
 				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
@@ -52,6 +53,17 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				sprint: {
+					DEFAULT: 'hsl(var(--sprint))',
+					foreground: 'hsl(var(--sprint-foreground))'
+				},
+				climb: {
+					DEFAULT: 'hsl(var(--climb))',
+					foreground: 'hsl(var(--climb-foreground))'
+				},
+				gold: 'hsl(var(--gold))',
+				silver: 'hsl(var(--silver))',
+				bronze: 'hsl(var(--bronze))',
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
