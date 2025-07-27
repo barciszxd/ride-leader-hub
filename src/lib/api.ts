@@ -1,7 +1,7 @@
 import { Challenge, Classification, Result, Athlete } from '@/types/leaderboard';
 
 // API Base URL - should be configured via environment variables in production
-const API_BASE_URL = process.env.VITE_API_URL || 'https://api.cyclingclub.com';
+const API_BASE_URL = process.env.VITE_API_URL;
 
 class LeaderboardAPI {
   private async request<T>(endpoint: string): Promise<T> {
@@ -18,7 +18,7 @@ class LeaderboardAPI {
   }
 
   // General Classification endpoints
-  async getClassification(gender?: 'men' | 'women'): Promise<Classification[]> {
+  async getClassification(gender?: 'M' | 'F'): Promise<Classification[]> {
     const params = gender ? `?gender=${gender}` : '';
     return this.request<Classification[]>(`/classification${params}`);
   }
@@ -35,7 +35,7 @@ class LeaderboardAPI {
   async getChallengeResults(
     challengeId: string,
     segmentType?: 'sprint' | 'climb',
-    gender?: 'men' | 'women'
+    gender?: 'M' | 'F'
   ): Promise<Result[]> {
     const params = new URLSearchParams();
     if (segmentType) params.append('segment_type', segmentType);
@@ -47,18 +47,18 @@ class LeaderboardAPI {
     return this.request<Result[]>(endpoint);
   }
 
-  // Rider endpoints
-  async getRiders(): Promise<Athlete[]> {
-    return this.request<Athlete[]>('/riders');
+  // Athlete endpoints
+  async getAthletes(): Promise<Athlete[]> {
+    return this.request<Athlete[]>('/athletes');
   }
 
-  async joinLeaderboard(riderData: Omit<Athlete, 'id'>): Promise<{ rider: Athlete; strava_auth_url?: string }> {
-    const response = await fetch(`${API_BASE_URL}/riders`, {
+  async joinLeaderboard(athleteData: Omit<Athlete, 'id'>): Promise<{ athlete: Athlete; strava_auth_url?: string }> {
+    const response = await fetch(`${API_BASE_URL}/athletes`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(riderData),
+      body: JSON.stringify(athleteData),
     });
 
     if (!response.ok) {

@@ -27,7 +27,7 @@ import { UserPlus } from 'lucide-react';
 
 const joinFormSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
-  gender: z.enum(['men', 'women'], {
+  gender: z.enum(['M', 'F'], {
     required_error: 'Please select your gender category',
   }),
 });

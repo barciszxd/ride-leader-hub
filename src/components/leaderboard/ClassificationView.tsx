@@ -54,7 +54,7 @@ export function ClassificationView({ data, category, gender }: ClassificationVie
   };
 
   const categoryTitle = category === 'sprint' ? 'Sprint Classification' : 'Climb Classification';
-  const genderTitle = gender === 'all' ? 'Overall' : gender === 'men' ? 'Men' : 'Women';
+  const genderTitle = gender === 'all' ? 'Overall' : gender === 'M' ? 'Men' : 'Women';
 
   return (
     <div className="space-y-6">
@@ -93,7 +93,7 @@ export function ClassificationView({ data, category, gender }: ClassificationVie
                         variant="secondary" 
                         className="text-xs"
                       >
-                        {rider.gender === 'men' ? 'Men' : 'Women'}
+                        {rider.gender === 'M' ? 'Men' : 'Women'}
                       </Badge>
                     </div>
                   </div>

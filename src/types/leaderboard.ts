@@ -1,8 +1,7 @@
 export interface Athlete {
   id: string;
   name: string;
-  gender: 'men' | 'women';
-  strava_id?: string;
+  gender: 'M' | 'F';
 }
 
 export interface Challenge {
@@ -40,7 +39,7 @@ export interface Result {
 export interface Classification {
   rider_id: string;
   rider_name: string;
-  gender: 'men' | 'women';
+  gender: 'M' | 'F';
   total_sprint_points: number;
   total_climb_points: number;
   sprint_position: number;
@@ -48,5 +47,5 @@ export interface Classification {
 }
 
 export type FilterCategory = 'sprint' | 'climb';
-export type FilterGender = 'men' | 'women' | 'all';
+export type FilterGender = 'M' | 'F' | 'all';
 export type ViewType = 'classification' | 'challenges';

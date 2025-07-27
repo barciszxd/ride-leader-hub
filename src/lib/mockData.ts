@@ -1,14 +1,14 @@
 import { Challenge, Classification, Result, Athlete } from '@/types/leaderboard';
 
-export const mockRiders: Athlete[] = [
-  { id: '1', name: 'Alex Johnson', gender: 'men', strava_id: 'alex_j' },
-  { id: '2', name: 'Sarah Miller', gender: 'women', strava_id: 'sarah_m' },
-  { id: '3', name: 'Mike Rodriguez', gender: 'men', strava_id: 'mike_r' },
-  { id: '4', name: 'Emma Wilson', gender: 'women', strava_id: 'emma_w' },
-  { id: '5', name: 'David Chen', gender: 'men', strava_id: 'david_c' },
-  { id: '6', name: 'Lisa Thompson', gender: 'women', strava_id: 'lisa_t' },
-  { id: '7', name: 'Chris Anderson', gender: 'men', strava_id: 'chris_a' },
-  { id: '8', name: 'Rachel Green', gender: 'women', strava_id: 'rachel_g' },
+export const mockAthletes: Athlete[] = [
+  { id: '1', name: 'Alex Johnson', gender: 'M'},
+  { id: '2', name: 'Sarah Miller', gender: 'F'},
+  { id: '3', name: 'Mike Rodriguez', gender: 'M'},
+  { id: '4', name: 'Emma Wilson', gender: 'F'},
+  { id: '5', name: 'David Chen', gender: 'M'},
+  { id: '6', name: 'Lisa Thompson', gender: 'F'},
+  { id: '7', name: 'Chris Anderson', gender: 'M'},
+  { id: '8', name: 'Rachel Green', gender: 'F'},
 ];
 
 export const mockChallenges: Challenge[] = [
@@ -81,14 +81,14 @@ export const mockChallenges: Challenge[] = [
 ];
 
 export const mockClassification: Classification[] = [
-  { rider_id: '1', rider_name: 'Alex Johnson', gender: 'men', total_sprint_points: 85, total_climb_points: 72, sprint_position: 1, climb_position: 3 },
-  { rider_id: '3', rider_name: 'Mike Rodriguez', gender: 'men', total_sprint_points: 78, total_climb_points: 88, sprint_position: 2, climb_position: 1 },
-  { rider_id: '5', rider_name: 'David Chen', gender: 'men', total_sprint_points: 71, total_climb_points: 79, sprint_position: 3, climb_position: 2 },
-  { rider_id: '7', rider_name: 'Chris Anderson', gender: 'men', total_sprint_points: 65, total_climb_points: 65, sprint_position: 4, climb_position: 4 },
-  { rider_id: '2', rider_name: 'Sarah Miller', gender: 'women', total_sprint_points: 92, total_climb_points: 85, sprint_position: 1, climb_position: 2 },
-  { rider_id: '4', rider_name: 'Emma Wilson', gender: 'women', total_sprint_points: 88, total_climb_points: 90, sprint_position: 2, climb_position: 1 },
-  { rider_id: '6', rider_name: 'Lisa Thompson', gender: 'women', total_sprint_points: 75, total_climb_points: 78, sprint_position: 3, climb_position: 3 },
-  { rider_id: '8', rider_name: 'Rachel Green', gender: 'women', total_sprint_points: 68, total_climb_points: 71, sprint_position: 4, climb_position: 4 },
+  { rider_id: '1', rider_name: 'Alex Johnson', gender: 'M', total_sprint_points: 85, total_climb_points: 72, sprint_position: 1, climb_position: 3 },
+  { rider_id: '3', rider_name: 'Mike Rodriguez', gender: 'M', total_sprint_points: 78, total_climb_points: 88, sprint_position: 2, climb_position: 1 },
+  { rider_id: '5', rider_name: 'David Chen', gender: 'M', total_sprint_points: 71, total_climb_points: 79, sprint_position: 3, climb_position: 2 },
+  { rider_id: '7', rider_name: 'Chris Anderson', gender: 'M', total_sprint_points: 65, total_climb_points: 65, sprint_position: 4, climb_position: 4 },
+  { rider_id: '2', rider_name: 'Sarah Miller', gender: 'F', total_sprint_points: 92, total_climb_points: 85, sprint_position: 1, climb_position: 2 },
+  { rider_id: '4', rider_name: 'Emma Wilson', gender: 'F', total_sprint_points: 88, total_climb_points: 90, sprint_position: 2, climb_position: 1 },
+  { rider_id: '6', rider_name: 'Lisa Thompson', gender: 'F', total_sprint_points: 75, total_climb_points: 78, sprint_position: 3, climb_position: 3 },
+  { rider_id: '8', rider_name: 'Rachel Green', gender: 'F', total_sprint_points: 68, total_climb_points: 71, sprint_position: 4, climb_position: 4 },
 ];
 
 export const mockResults: Record<string, Result[]> = {

@@ -107,8 +107,8 @@ const Index = () => {
                 <FilterToggle
                   options={[
                     { value: 'all', label: 'All' },
-                    { value: 'men', label: 'Men' },
-                    { value: 'women', label: 'Women' },
+                    { value: 'M', label: 'Men' },
+                    { value: 'F', label: 'Women' },
                   ]}
                   value={gender}
                   onChange={(value) => setGender(value as FilterGender)}
