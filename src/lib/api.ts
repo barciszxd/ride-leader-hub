@@ -1,4 +1,4 @@
-import { Challenge, Classification, Result, Rider } from '@/types/leaderboard';
+import { Challenge, Classification, Result, Athlete } from '@/types/leaderboard';
 
 // API Base URL - should be configured via environment variables in production
 const API_BASE_URL = process.env.VITE_API_URL || 'https://api.cyclingclub.com';
@@ -48,11 +48,11 @@ class LeaderboardAPI {
   }
 
   // Rider endpoints
-  async getRiders(): Promise<Rider[]> {
-    return this.request<Rider[]>('/riders');
+  async getRiders(): Promise<Athlete[]> {
+    return this.request<Athlete[]>('/riders');
   }
 
-  async joinLeaderboard(riderData: Omit<Rider, 'id'>): Promise<{ rider: Rider; strava_auth_url?: string }> {
+  async joinLeaderboard(riderData: Omit<Athlete, 'id'>): Promise<{ rider: Athlete; strava_auth_url?: string }> {
     const response = await fetch(`${API_BASE_URL}/riders`, {
       method: 'POST',
       headers: {

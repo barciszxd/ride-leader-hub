@@ -1,4 +1,4 @@
-export interface Rider {
+export interface Athlete {
   id: string;
   name: string;
   gender: 'men' | 'women';

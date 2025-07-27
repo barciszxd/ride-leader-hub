@@ -1,6 +1,6 @@
-import { Challenge, Classification, Result, Rider } from '@/types/leaderboard';
+import { Challenge, Classification, Result, Athlete } from '@/types/leaderboard';
 
-export const mockRiders: Rider[] = [
+export const mockRiders: Athlete[] = [
   { id: '1', name: 'Alex Johnson', gender: 'men', strava_id: 'alex_j' },
   { id: '2', name: 'Sarah Miller', gender: 'women', strava_id: 'sarah_m' },
   { id: '3', name: 'Mike Rodriguez', gender: 'men', strava_id: 'mike_r' },
