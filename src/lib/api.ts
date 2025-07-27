@@ -75,7 +75,7 @@ class LeaderboardAPI {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ rider_id: riderId, code }),
+      body: JSON.stringify({ athlete_id: riderId, code }),
     });
 
     if (!response.ok) {

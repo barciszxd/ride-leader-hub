@@ -70,7 +70,7 @@ export function ClassificationView({ data, category, gender }: ClassificationVie
           
           return (
             <Card
-              key={rider.rider_id}
+              key={rider.athlete_id}
               className={cn(
                 'transition-all duration-200 hover:shadow-md',
                 getPositionStyle(position)
