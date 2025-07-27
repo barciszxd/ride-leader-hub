@@ -81,31 +81,31 @@ export const mockChallenges: Challenge[] = [
 ];
 
 export const mockClassification: Classification[] = [
-  { rider_id: '1', rider_name: 'Alex Johnson', gender: 'M', total_sprint_points: 85, total_climb_points: 72},
-  { rider_id: '3', rider_name: 'Mike Rodriguez', gender: 'M', total_sprint_points: 78, total_climb_points: 88 },
-  { rider_id: '5', rider_name: 'David Chen', gender: 'M', total_sprint_points: 71, total_climb_points: 79 },
-  { rider_id: '7', rider_name: 'Chris Anderson', gender: 'M', total_sprint_points: 65, total_climb_points: 65 },
-  { rider_id: '2', rider_name: 'Sarah Miller', gender: 'F', total_sprint_points: 92, total_climb_points: 85 },
-  { rider_id: '4', rider_name: 'Emma Wilson', gender: 'F', total_sprint_points: 88, total_climb_points: 90 },
-  { rider_id: '6', rider_name: 'Lisa Thompson', gender: 'F', total_sprint_points: 75, total_climb_points: 78 },
-  { rider_id: '8', rider_name: 'Rachel Green', gender: 'F', total_sprint_points: 68, total_climb_points: 71 },
+  { rider_id: '1', athlete_name: 'Alex Johnson', gender: 'M', total_sprint_points: 85, total_climb_points: 72},
+  { rider_id: '3', athlete_name: 'Mike Rodriguez', gender: 'M', total_sprint_points: 78, total_climb_points: 88 },
+  { rider_id: '5', athlete_name: 'David Chen', gender: 'M', total_sprint_points: 71, total_climb_points: 79 },
+  { rider_id: '7', athlete_name: 'Chris Anderson', gender: 'M', total_sprint_points: 65, total_climb_points: 65 },
+  { rider_id: '2', athlete_name: 'Sarah Miller', gender: 'F', total_sprint_points: 92, total_climb_points: 85 },
+  { rider_id: '4', athlete_name: 'Emma Wilson', gender: 'F', total_sprint_points: 88, total_climb_points: 90 },
+  { rider_id: '6', athlete_name: 'Lisa Thompson', gender: 'F', total_sprint_points: 75, total_climb_points: 78 },
+  { rider_id: '8', athlete_name: 'Rachel Green', gender: 'F', total_sprint_points: 68, total_climb_points: 71 },
 ];
 
 export const mockResults: Record<string, Result[]> = {
   '1': [
-    { id: 'r1', rider_id: '1', rider_name: 'Alex Johnson', challenge_id: '1', segment_id: 's1', segment_type: 'sprint', time: 78, points: 20, position: 1, recorded_at: '2024-03-10T10:30:00Z' },
-    { id: 'r2', rider_id: '3', rider_name: 'Mike Rodriguez', challenge_id: '1', segment_id: 's1', segment_type: 'sprint', time: 82, points: 17, position: 2, recorded_at: '2024-03-11T14:20:00Z' },
-    { id: 'r3', rider_id: '5', rider_name: 'David Chen', challenge_id: '1', segment_id: 's1', segment_type: 'sprint', time: 85, points: 15, position: 3, recorded_at: '2024-03-12T16:45:00Z' },
-    { id: 'r4', rider_id: '3', rider_name: 'Mike Rodriguez', challenge_id: '1', segment_id: 'c1', segment_type: 'climb', time: 420, points: 20, position: 1, recorded_at: '2024-03-11T14:30:00Z' },
-    { id: 'r5', rider_id: '5', rider_name: 'David Chen', challenge_id: '1', segment_id: 'c1', segment_type: 'climb', time: 435, points: 17, position: 2, recorded_at: '2024-03-12T17:00:00Z' },
-    { id: 'r6', rider_id: '1', rider_name: 'Alex Johnson', challenge_id: '1', segment_id: 'c1', segment_type: 'climb', time: 445, points: 15, position: 3, recorded_at: '2024-03-10T11:00:00Z' },
+    { id: 'r1', rider_id: '1', athlete_name: 'Alex Johnson', challenge_id: '1', segment_id: 's1', segment_type: 'sprint', time: 78, points: 20, position: 1, recorded_at: '2024-03-10T10:30:00Z' },
+    { id: 'r2', rider_id: '3', athlete_name: 'Mike Rodriguez', challenge_id: '1', segment_id: 's1', segment_type: 'sprint', time: 82, points: 17, position: 2, recorded_at: '2024-03-11T14:20:00Z' },
+    { id: 'r3', rider_id: '5', athlete_name: 'David Chen', challenge_id: '1', segment_id: 's1', segment_type: 'sprint', time: 85, points: 15, position: 3, recorded_at: '2024-03-12T16:45:00Z' },
+    { id: 'r4', rider_id: '3', athlete_name: 'Mike Rodriguez', challenge_id: '1', segment_id: 'c1', segment_type: 'climb', time: 420, points: 20, position: 1, recorded_at: '2024-03-11T14:30:00Z' },
+    { id: 'r5', rider_id: '5', athlete_name: 'David Chen', challenge_id: '1', segment_id: 'c1', segment_type: 'climb', time: 435, points: 17, position: 2, recorded_at: '2024-03-12T17:00:00Z' },
+    { id: 'r6', rider_id: '1', athlete_name: 'Alex Johnson', challenge_id: '1', segment_id: 'c1', segment_type: 'climb', time: 445, points: 15, position: 3, recorded_at: '2024-03-10T11:00:00Z' },
   ],
   '2': [
-    { id: 'r7', rider_id: '2', rider_name: 'Sarah Miller', challenge_id: '2', segment_id: 's2', segment_type: 'sprint', time: 95, points: 20, position: 1, recorded_at: '2024-03-20T09:15:00Z' },
-    { id: 'r8', rider_id: '4', rider_name: 'Emma Wilson', challenge_id: '2', segment_id: 's2', segment_type: 'sprint', time: 98, points: 17, position: 2, recorded_at: '2024-03-21T11:30:00Z' },
-    { id: 'r9', rider_id: '6', rider_name: 'Lisa Thompson', challenge_id: '2', segment_id: 's2', segment_type: 'sprint', time: 102, points: 15, position: 3, recorded_at: '2024-03-22T15:20:00Z' },
-    { id: 'r10', rider_id: '4', rider_name: 'Emma Wilson', challenge_id: '2', segment_id: 'c2', segment_type: 'climb', time: 580, points: 20, position: 1, recorded_at: '2024-03-21T12:00:00Z' },
-    { id: 'r11', rider_id: '2', rider_name: 'Sarah Miller', challenge_id: '2', segment_id: 'c2', segment_type: 'climb', time: 590, points: 17, position: 2, recorded_at: '2024-03-20T09:45:00Z' },
-    { id: 'r12', rider_id: '6', rider_name: 'Lisa Thompson', challenge_id: '2', segment_id: 'c2', segment_type: 'climb', time: 605, points: 15, position: 3, recorded_at: '2024-03-22T15:50:00Z' },
+    { id: 'r7', rider_id: '2', athlete_name: 'Sarah Miller', challenge_id: '2', segment_id: 's2', segment_type: 'sprint', time: 95, points: 20, position: 1, recorded_at: '2024-03-20T09:15:00Z' },
+    { id: 'r8', rider_id: '4', athlete_name: 'Emma Wilson', challenge_id: '2', segment_id: 's2', segment_type: 'sprint', time: 98, points: 17, position: 2, recorded_at: '2024-03-21T11:30:00Z' },
+    { id: 'r9', rider_id: '6', athlete_name: 'Lisa Thompson', challenge_id: '2', segment_id: 's2', segment_type: 'sprint', time: 102, points: 15, position: 3, recorded_at: '2024-03-22T15:20:00Z' },
+    { id: 'r10', rider_id: '4', athlete_name: 'Emma Wilson', challenge_id: '2', segment_id: 'c2', segment_type: 'climb', time: 580, points: 20, position: 1, recorded_at: '2024-03-21T12:00:00Z' },
+    { id: 'r11', rider_id: '2', athlete_name: 'Sarah Miller', challenge_id: '2', segment_id: 'c2', segment_type: 'climb', time: 590, points: 17, position: 2, recorded_at: '2024-03-20T09:45:00Z' },
+    { id: 'r12', rider_id: '6', athlete_name: 'Lisa Thompson', challenge_id: '2', segment_id: 'c2', segment_type: 'climb', time: 605, points: 15, position: 3, recorded_at: '2024-03-22T15:50:00Z' },
   ],
 };

@@ -26,7 +26,7 @@ export interface Segment {
 export interface Result {
   id: string;
   rider_id: string;
-  rider_name: string;
+  athlete_name: string;
   challenge_id: string;
   segment_id: string;
   segment_type: 'sprint' | 'climb';
@@ -38,7 +38,7 @@ export interface Result {
 
 export interface Classification {
   rider_id: string;
-  rider_name: string;
+  athlete_name: string;
   gender: 'M' | 'F';
   total_sprint_points: number;
   total_climb_points: number;

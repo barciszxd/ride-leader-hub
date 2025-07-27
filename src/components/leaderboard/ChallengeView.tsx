@@ -48,8 +48,8 @@ export function ChallengeView({ challenges, category, gender }: ChallengeViewPro
       // For now, we'll use a simple heuristic based on names
       filtered = filtered.filter(result => {
         const femaleNames = ['Sarah', 'Emma', 'Lisa', 'Rachel'];
-        const isFemale = femaleNames.some(name => result.rider_name.includes(name));
-        return gender === 'women' ? isFemale : !isFemale;
+        const isFemale = femaleNames.some(name => result.athlete_name.includes(name));
+        return gender === 'F' ? isFemale : !isFemale;
       });
     }
 
@@ -184,7 +184,7 @@ export function ChallengeView({ challenges, category, gender }: ChallengeViewPro
                       
                       <div>
                         <h4 className="font-medium text-foreground">
-                          {result.rider_name}
+                          {result.athlete_name}
                         </h4>
                         <div className="flex items-center gap-2 mt-0.5">
                           <Badge variant="outline" className="text-xs">

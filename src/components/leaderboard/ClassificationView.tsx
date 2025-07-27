@@ -87,7 +87,7 @@ export function ClassificationView({ data, category, gender }: ClassificationVie
                   </div>
                   
                   <div>
-                    <h3 className="font-semibold text-foreground">{rider.rider_name}</h3>
+                    <h3 className="font-semibold text-foreground">{rider.athlete_name}</h3>
                     <div className="flex items-center gap-2 mt-1">
                       <Badge 
                         variant="secondary" 
