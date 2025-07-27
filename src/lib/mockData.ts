@@ -81,14 +81,14 @@ export const mockChallenges: Challenge[] = [
 ];
 
 export const mockClassification: Classification[] = [
-  { rider_id: '1', rider_name: 'Alex Johnson', gender: 'M', total_sprint_points: 85, total_climb_points: 72, sprint_position: 1, climb_position: 3 },
-  { rider_id: '3', rider_name: 'Mike Rodriguez', gender: 'M', total_sprint_points: 78, total_climb_points: 88, sprint_position: 2, climb_position: 1 },
-  { rider_id: '5', rider_name: 'David Chen', gender: 'M', total_sprint_points: 71, total_climb_points: 79, sprint_position: 3, climb_position: 2 },
-  { rider_id: '7', rider_name: 'Chris Anderson', gender: 'M', total_sprint_points: 65, total_climb_points: 65, sprint_position: 4, climb_position: 4 },
-  { rider_id: '2', rider_name: 'Sarah Miller', gender: 'F', total_sprint_points: 92, total_climb_points: 85, sprint_position: 1, climb_position: 2 },
-  { rider_id: '4', rider_name: 'Emma Wilson', gender: 'F', total_sprint_points: 88, total_climb_points: 90, sprint_position: 2, climb_position: 1 },
-  { rider_id: '6', rider_name: 'Lisa Thompson', gender: 'F', total_sprint_points: 75, total_climb_points: 78, sprint_position: 3, climb_position: 3 },
-  { rider_id: '8', rider_name: 'Rachel Green', gender: 'F', total_sprint_points: 68, total_climb_points: 71, sprint_position: 4, climb_position: 4 },
+  { rider_id: '1', rider_name: 'Alex Johnson', gender: 'M', total_sprint_points: 85, total_climb_points: 72},
+  { rider_id: '3', rider_name: 'Mike Rodriguez', gender: 'M', total_sprint_points: 78, total_climb_points: 88 },
+  { rider_id: '5', rider_name: 'David Chen', gender: 'M', total_sprint_points: 71, total_climb_points: 79 },
+  { rider_id: '7', rider_name: 'Chris Anderson', gender: 'M', total_sprint_points: 65, total_climb_points: 65 },
+  { rider_id: '2', rider_name: 'Sarah Miller', gender: 'F', total_sprint_points: 92, total_climb_points: 85 },
+  { rider_id: '4', rider_name: 'Emma Wilson', gender: 'F', total_sprint_points: 88, total_climb_points: 90 },
+  { rider_id: '6', rider_name: 'Lisa Thompson', gender: 'F', total_sprint_points: 75, total_climb_points: 78 },
+  { rider_id: '8', rider_name: 'Rachel Green', gender: 'F', total_sprint_points: 68, total_climb_points: 71 },
 ];
 
 export const mockResults: Record<string, Result[]> = {

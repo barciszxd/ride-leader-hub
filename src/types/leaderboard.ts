@@ -42,8 +42,6 @@ export interface Classification {
   gender: 'M' | 'F';
   total_sprint_points: number;
   total_climb_points: number;
-  sprint_position: number;
-  climb_position: number;
 }
 
 export type FilterCategory = 'sprint' | 'climb';
