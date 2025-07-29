@@ -7,7 +7,7 @@ import { ChallengeView } from '@/components/leaderboard/ChallengeView';
 import { FilterToggle } from '@/components/leaderboard/FilterToggle';
 import { JoinButton } from '@/components/leaderboard/JoinButton';
 import { Challenge, Classification, ViewType, FilterCategory, FilterGender } from '@/types/leaderboard';
-import { mockChallenges, mockClassification } from '@/lib/mockData';
+import { getChallenges, mockClassification } from '@/lib/mockData';
 import { Trophy, Target, Calendar, Users } from 'lucide-react';
 
 const Index = () => {
@@ -19,9 +19,19 @@ const Index = () => {
 
   // Load initial data
   useEffect(() => {
-    // In a real app, these would be API calls
-    setChallenges(mockChallenges);
-    setClassification(mockClassification);
+    // Load challenges from API
+    const loadData = async () => {
+      try {
+        const challengesData = await getChallenges();
+        setChallenges(challengesData);
+        setClassification(mockClassification);
+      } catch (error) {
+        console.error('Failed to load challenges:', error);
+        // You might want to show an error message to the user here
+      }
+    };
+    
+    loadData();
   }, []);
 
   const activeChallenge = challenges.find(c => c.status === 'active');

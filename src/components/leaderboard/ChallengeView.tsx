@@ -6,7 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { SegmentBadge } from './SegmentBadge';
 import { Trophy, Medal, Award, Calendar, MapPin, TrendingUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { mockResults } from '@/lib/mockData';
+import { getChallengeResults } from '@/lib/mockData';
 
 interface ChallengeViewProps {
   challenges: Challenge[];
@@ -30,9 +30,17 @@ export function ChallengeView({ challenges, category, gender }: ChallengeViewPro
   // Load results when challenge changes
   useEffect(() => {
     if (selectedChallengeId) {
-      // In real app, this would be an API call
-      const challengeResults = mockResults[selectedChallengeId] || [];
-      setResults(challengeResults);
+      const loadResults = async () => {
+        try {
+          const challengeResults = await getChallengeResults(selectedChallengeId);
+          setResults(challengeResults);
+        } catch (error) {
+          console.error('Failed to load challenge results:', error);
+          setResults([]);
+        }
+      };
+      
+      loadResults();
     }
   }, [selectedChallengeId]);
 
