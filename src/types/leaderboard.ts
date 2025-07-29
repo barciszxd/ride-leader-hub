@@ -45,5 +45,5 @@ export interface Classification {
 }
 
 export type FilterCategory = 'sprint' | 'climb';
-export type FilterGender = 'M' | 'F' | 'all';
+export type FilterGender = 'M' | 'F';
 export type ViewType = 'classification' | 'challenges';

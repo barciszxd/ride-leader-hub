@@ -34,8 +34,8 @@ class LeaderboardAPI {
 
   async getChallengeResults(
     challengeId: string,
-    segmentType?: 'sprint' | 'climb',
-    gender?: 'M' | 'F'
+    segmentType: 'sprint' | 'climb',
+    gender: 'M' | 'F'
   ): Promise<Result[]> {
     const params = new URLSearchParams();
     if (segmentType) params.append('segment_type', segmentType);
@@ -43,7 +43,7 @@ class LeaderboardAPI {
     
     const queryString = params.toString();
     const endpoint = `/challenges/${challengeId}/results${queryString ? `?${queryString}` : ''}`;
-    
+    console.log(`Fetching challenge results from: ${endpoint}`);
     return this.request<Result[]>(endpoint);
   }
 

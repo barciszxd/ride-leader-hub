@@ -13,7 +13,7 @@ import { Trophy, Target, Calendar, Users } from 'lucide-react';
 const Index = () => {
   const [view, setView] = useState<ViewType>('classification');
   const [category, setCategory] = useState<FilterCategory>('sprint');
-  const [gender, setGender] = useState<FilterGender>('all');
+  const [gender, setGender] = useState<FilterGender>('M');
   const [challenges, setChallenges] = useState<Challenge[]>([]);
   const [classification, setClassification] = useState<Classification[]>([]);
 
@@ -116,7 +116,6 @@ const Index = () => {
                 />
                 <FilterToggle
                   options={[
-                    { value: 'all', label: 'All' },
                     { value: 'M', label: 'Men' },
                     { value: 'F', label: 'Women' },
                   ]}

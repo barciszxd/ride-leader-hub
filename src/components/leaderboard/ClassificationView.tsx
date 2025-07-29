@@ -15,9 +15,7 @@ export function ClassificationView({ data, category, gender }: ClassificationVie
   const filteredData = useMemo(() => {
     let filtered = data;
 
-    if (gender !== 'all') {
-      filtered = filtered.filter(rider => rider.gender === gender);
-    }
+    filtered = filtered.filter(rider => rider.gender === gender);
 
     // Sort by the selected category points
     return filtered.sort((a, b) => {
