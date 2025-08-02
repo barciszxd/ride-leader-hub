@@ -7,7 +7,7 @@ import { ChallengeView } from '@/components/leaderboard/ChallengeView';
 import { FilterToggle } from '@/components/leaderboard/FilterToggle';
 import { JoinButton } from '@/components/leaderboard/JoinButton';
 import { Challenge, Classification, ViewType, FilterCategory, FilterGender } from '@/types/leaderboard';
-import { getChallenges, mockClassification } from '@/lib/mockData';
+import { getChallenges, getClassification } from '@/lib/mockData';
 import { Trophy, Target, Calendar, Users } from 'lucide-react';
 
 const Index = () => {
@@ -24,7 +24,8 @@ const Index = () => {
       try {
         const challengesData = await getChallenges();
         setChallenges(challengesData);
-        setClassification(mockClassification);
+        const classificationData = await getClassification();
+        setClassification(classificationData);
       } catch (error) {
         console.error('Failed to load challenges:', error);
         // You might want to show an error message to the user here
