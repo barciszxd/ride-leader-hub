@@ -154,7 +154,7 @@ export function ChallengeView({ challenges, category, gender }: ChallengeViewPro
               <div>
                 <CardTitle className="flex items-center gap-2">
                   {selectedChallenge.name}
-                  <SegmentBadge type={category} />
+                  <SegmentBadge segment={category === 'sprint' ? selectedChallenge.sprint_segment : selectedChallenge.climb_segment} />
                 </CardTitle>
                 <div className="flex items-center gap-4 mt-2 text-sm text-muted-foreground">
                   <div className="flex items-center gap-1">
