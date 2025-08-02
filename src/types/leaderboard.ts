@@ -27,6 +27,7 @@ export interface Result {
   id: string;
   athlete_id: string;
   athlete_name: string;
+  athlete_gender: 'M' | 'F';
   challenge_id: string;
   segment_id: string;
   segment_type: 'sprint' | 'climb';

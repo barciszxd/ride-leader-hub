@@ -6,7 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { SegmentBadge } from './SegmentBadge';
 import { Trophy, Medal, Award, Calendar, MapPin, TrendingUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { getChallengeResults } from '@/lib/mockData';
+import { api } from '@/lib/api';
 
 interface ChallengeViewProps {
   challenges: Challenge[];
@@ -27,12 +27,17 @@ export function ChallengeView({ challenges, category, gender }: ChallengeViewPro
     }
   }, [challenges, selectedChallengeId]);
 
-  // Load results when challenge changes
+  // Load results when challenge changes (fetch all results once)
   useEffect(() => {
     if (selectedChallengeId) {
       const loadResults = async () => {
         try {
-          const challengeResults = await getChallengeResults(selectedChallengeId);
+          // Fetch all results for the challenge without filters
+          const challengeResults = await api.getChallengeResults(
+            selectedChallengeId,
+            undefined, // No segment type filter
+            undefined  // No gender filter
+          );
           setResults(challengeResults);
         } catch (error) {
           console.error('Failed to load challenge results:', error);
@@ -42,25 +47,18 @@ export function ChallengeView({ challenges, category, gender }: ChallengeViewPro
       
       loadResults();
     }
-  }, [selectedChallengeId]);
+  }, [selectedChallengeId]); // Only depend on challenge ID
 
   const filteredResults = useMemo(() => {
     let filtered = results;
 
-    // Filter by segment type
+    // Filter by segment type (sprint/climb)
     filtered = filtered.filter(result => result.segment_type === category);
 
-    // Filter by gender - we'll need to look up rider gender from the results
-    if (gender !== 'all') {
-      // In a real app, we'd have rider data with gender info
-      // For now, we'll use a simple heuristic based on names
-      filtered = filtered.filter(result => {
-        const femaleNames = ['Sarah', 'Emma', 'Lisa', 'Rachel'];
-        const isFemale = femaleNames.some(name => result.athlete_name.includes(name));
-        return gender === 'F' ? isFemale : !isFemale;
-      });
-    }
+    // Filter by gender
+    filtered = filtered.filter(result => result.athlete_gender === gender);
 
+    // Sort by position
     return filtered.sort((a, b) => a.position - b.position);
   }, [results, category, gender]);
 
