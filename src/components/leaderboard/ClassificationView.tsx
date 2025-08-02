@@ -52,7 +52,7 @@ export function ClassificationView({ data, category, gender }: ClassificationVie
   };
 
   const categoryTitle = category === 'sprint' ? 'Sprint Classification' : 'Climb Classification';
-  const genderTitle = gender === 'all' ? 'Overall' : gender === 'M' ? 'Men' : 'Women';
+  const genderTitle = gender === 'M' ? 'Men' : 'Women';
 
   return (
     <div className="space-y-6">
