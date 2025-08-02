@@ -70,9 +70,10 @@ export function ClassificationView({ data, category, gender }: ClassificationVie
             <Card
               key={rider.athlete_id}
               className={cn(
-                'transition-all duration-200 hover:shadow-md',
+                'transition-all duration-200 hover:shadow-md cursor-pointer',
                 getPositionStyle(position)
               )}
+              onClick={() => window.open(`https://strava.com/athletes/${rider.athlete_id}`, '_blank')}
             >
               <CardContent className="flex items-center justify-between p-4">
                 <div className="flex items-center gap-4">
