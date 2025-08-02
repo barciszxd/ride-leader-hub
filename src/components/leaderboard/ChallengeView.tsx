@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { Challenge, Result, FilterCategory, FilterGender } from '@/types/leaderboard';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { SegmentBadge } from './SegmentBadge';
 import { Trophy, Medal, Award, Calendar, MapPin, TrendingUp } from 'lucide-react';
@@ -12,11 +13,13 @@ interface ChallengeViewProps {
   challenges: Challenge[];
   category: FilterCategory;
   gender: FilterGender;
+  isLoading?: boolean;
 }
 
-export function ChallengeView({ challenges, category, gender }: ChallengeViewProps) {
+export function ChallengeView({ challenges, category, gender, isLoading = false }: ChallengeViewProps) {
   const [selectedChallengeId, setSelectedChallengeId] = useState<string>('');
   const [results, setResults] = useState<Result[]>([]);
+  const [isLoadingResults, setIsLoadingResults] = useState(false);
 
   const selectedChallenge = challenges.find(c => c.id === selectedChallengeId);
 
@@ -32,6 +35,7 @@ export function ChallengeView({ challenges, category, gender }: ChallengeViewPro
     if (selectedChallengeId) {
       const loadResults = async () => {
         try {
+          setIsLoadingResults(true);
           // Fetch all results for the challenge without filters
           const challengeResults = await api.getChallengeResults(
             selectedChallengeId,
@@ -42,6 +46,8 @@ export function ChallengeView({ challenges, category, gender }: ChallengeViewPro
         } catch (error) {
           console.error('Failed to load challenge results:', error);
           setResults([]);
+        } finally {
+          setIsLoadingResults(false);
         }
       };
       
@@ -102,6 +108,70 @@ export function ChallengeView({ challenges, category, gender }: ChallengeViewPro
       day: 'numeric',
     });
   };
+
+  if (isLoading) {
+    return (
+      <div className="space-y-6">
+        <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+          <div>
+            <h2 className="text-2xl font-bold text-foreground">Challenge Results</h2>
+            <p className="text-muted-foreground">
+              View individual challenge leaderboards
+            </p>
+          </div>
+          
+          <Skeleton className="h-10 w-full sm:w-64" />
+        </div>
+
+        <Card>
+          <CardHeader>
+            <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+              <div>
+                <Skeleton className="h-6 w-48 mb-2" />
+                <Skeleton className="h-4 w-32" />
+              </div>
+              <div className="flex items-center gap-2">
+                <Skeleton className="h-6 w-20" />
+                <Skeleton className="h-6 w-20" />
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
+              <div className="flex items-center justify-between text-sm font-medium text-muted-foreground border-b pb-2">
+                <span>Rider</span>
+                <span>Time</span>
+              </div>
+              
+              {Array.from({ length: 6 }, (_, index) => (
+                <Card key={index} className="transition-all duration-200">
+                  <CardContent className="flex items-center justify-between p-3">
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-center justify-center w-6 h-6">
+                        <span className="text-sm font-bold text-muted-foreground">
+                          {index + 1}
+                        </span>
+                      </div>
+                      
+                      <div>
+                        <Skeleton className="h-4 w-24 mb-1" />
+                        <Skeleton className="h-3 w-16" />
+                      </div>
+                    </div>
+
+                    <div className="text-right">
+                      <Skeleton className="h-4 w-16 mb-1" />
+                      <Skeleton className="h-3 w-12" />
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   if (challenges.length === 0) {
     return (
@@ -172,50 +242,77 @@ export function ChallengeView({ challenges, category, gender }: ChallengeViewPro
                 <span>Time</span>
               </div>
               
-              {filteredResults.map((result) => (
-                <Card
-                  key={result.id}
-                  className={cn(
-                    'transition-all duration-200 hover:shadow-md cursor-pointer',
-                    getPositionStyle(result.position)
-                  )}
-                  onClick={() => window.open(`https://strava.com/activities/${result.activity_id}`, '_blank')}
-                >
-                  <CardContent className="flex items-center justify-between p-3">
-                    <div className="flex items-center gap-3">
-                      <div className="flex items-center justify-center w-6 h-6">
-                        {getPositionIcon(result.position) || (
+              {isLoadingResults ? (
+                // Show skeleton cards while loading results
+                Array.from({ length: 6 }, (_, index) => (
+                  <Card key={index} className="transition-all duration-200">
+                    <CardContent className="flex items-center justify-between p-3">
+                      <div className="flex items-center gap-3">
+                        <div className="flex items-center justify-center w-6 h-6">
                           <span className="text-sm font-bold text-muted-foreground">
-                            {result.position}
+                            {index + 1}
                           </span>
-                        )}
-                      </div>
-                      
-                      <div>
-                        <h4 className="font-medium text-foreground">
-                          {result.athlete_name}
-                        </h4>
-                        <div className="flex items-center gap-2 mt-0.5">
-                          <Badge variant="outline" className="text-xs">
-                            {result.points} pts
-                          </Badge>
+                        </div>
+                        
+                        <div>
+                          <Skeleton className="h-4 w-24 mb-1" />
+                          <Skeleton className="h-3 w-16" />
                         </div>
                       </div>
-                    </div>
 
-                    <div className="text-right">
-                      <div className="font-mono font-semibold text-foreground">
-                        {formatTime(result.time)}
+                      <div className="text-right">
+                        <Skeleton className="h-4 w-16 mb-1" />
+                        <Skeleton className="h-3 w-12" />
                       </div>
-                      <div className="text-xs text-muted-foreground">
-                        {new Date(result.recorded_at).toLocaleDateString()}
+                    </CardContent>
+                  </Card>
+                ))
+              ) : (
+                filteredResults.map((result) => (
+                  <Card
+                    key={result.id}
+                    className={cn(
+                      'transition-all duration-200 hover:shadow-md cursor-pointer',
+                      getPositionStyle(result.position)
+                    )}
+                    onClick={() => window.open(`https://strava.com/activities/${result.activity_id}`, '_blank')}
+                  >
+                    <CardContent className="flex items-center justify-between p-3">
+                      <div className="flex items-center gap-3">
+                        <div className="flex items-center justify-center w-6 h-6">
+                          {getPositionIcon(result.position) || (
+                            <span className="text-sm font-bold text-muted-foreground">
+                              {result.position}
+                            </span>
+                          )}
+                        </div>
+                        
+                        <div>
+                          <h4 className="font-medium text-foreground">
+                            {result.athlete_name}
+                          </h4>
+                          <div className="flex items-center gap-2 mt-0.5">
+                            <Badge variant="outline" className="text-xs">
+                              {result.points} pts
+                            </Badge>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+
+                      <div className="text-right">
+                        <div className="font-mono font-semibold text-foreground">
+                          {formatTime(result.time)}
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          {new Date(result.recorded_at).toLocaleDateString()}
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))
+              )}
               
-              {filteredResults.length === 0 && (
+              {!isLoadingResults && filteredResults.length === 0 && (
                 <div className="text-center py-8 text-muted-foreground">
                   No results found for the selected filters.
                 </div>

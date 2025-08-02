@@ -16,18 +16,28 @@ const Index = () => {
   const [gender, setGender] = useState<FilterGender>('M');
   const [challenges, setChallenges] = useState<Challenge[]>([]);
   const [classification, setClassification] = useState<Classification[]>([]);
+  const [isLoadingClassification, setIsLoadingClassification] = useState(true);
+  const [isLoadingChallenges, setIsLoadingChallenges] = useState(true);
 
   // Load initial data
   useEffect(() => {
     // Load challenges from API
     const loadData = async () => {
       try {
+        setIsLoadingChallenges(true);
+        setIsLoadingClassification(true);
+        
         const challengesData = await getChallenges();
         setChallenges(challengesData);
+        setIsLoadingChallenges(false);
+        
         const classificationData = await getClassification();
         setClassification(classificationData);
+        setIsLoadingClassification(false);
       } catch (error) {
         console.error('Failed to load challenges:', error);
+        setIsLoadingChallenges(false);
+        setIsLoadingClassification(false);
         // You might want to show an error message to the user here
       }
     };
@@ -131,6 +141,7 @@ const Index = () => {
                 data={classification}
                 category={category}
                 gender={gender}
+                isLoading={isLoadingClassification}
               />
             </TabsContent>
 
@@ -139,6 +150,7 @@ const Index = () => {
                 challenges={challenges}
                 category={category}
                 gender={gender}
+                isLoading={isLoadingChallenges}
               />
             </TabsContent>
           </Tabs>
