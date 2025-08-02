@@ -25,6 +25,7 @@ export interface Segment {
 
 export interface Result {
   id: string;
+  activity_id: string;
   athlete_id: string;
   athlete_name: string;
   athlete_gender: 'M' | 'F';

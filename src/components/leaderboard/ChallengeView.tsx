@@ -174,9 +174,10 @@ export function ChallengeView({ challenges, category, gender }: ChallengeViewPro
                 <Card
                   key={result.id}
                   className={cn(
-                    'transition-all duration-200',
+                    'transition-all duration-200 hover:shadow-md cursor-pointer',
                     getPositionStyle(result.position)
                   )}
+                  onClick={() => window.open(`https://strava.com/activities/${result.activity_id}`, '_blank')}
                 >
                   <CardContent className="flex items-center justify-between p-3">
                     <div className="flex items-center gap-3">
