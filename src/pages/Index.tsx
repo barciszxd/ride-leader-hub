@@ -2,13 +2,23 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { ClassificationView } from '@/components/leaderboard/ClassificationView';
 import { ChallengeView } from '@/components/leaderboard/ChallengeView';
 import { FilterToggle } from '@/components/leaderboard/FilterToggle';
 import { JoinButton } from '@/components/leaderboard/JoinButton';
 import { Challenge, Classification, ViewType, FilterCategory, FilterGender } from '@/types/leaderboard';
 import { getChallenges, getClassification } from '@/lib/mockData';
-import { Trophy, Target, Calendar, Users } from 'lucide-react';
+import { api } from '@/lib/api';
+import { useToast } from '@/hooks/use-toast';
+import { Trophy, Target, Calendar, Users, Loader2 } from 'lucide-react';
 
 const Index = () => {
   const [view, setView] = useState<ViewType>('classification');
@@ -18,6 +28,55 @@ const Index = () => {
   const [classification, setClassification] = useState<Classification[]>([]);
   const [isLoadingClassification, setIsLoadingClassification] = useState(true);
   const [isLoadingChallenges, setIsLoadingChallenges] = useState(true);
+  
+  // Strava callback handling
+  const [showStravaDialog, setShowStravaDialog] = useState(false);
+  const [stravaDialogState, setStravaDialogState] = useState<'loading' | 'success' | 'error'>('loading');
+  const [stravaMessage, setStravaMessage] = useState('');
+  const { toast } = useToast();
+
+  // Check for Strava callback on component mount
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
+    const scope = urlParams.get('scope');
+    
+    if (code && scope) {
+      // This is a Strava callback
+      setShowStravaDialog(true);
+      setStravaDialogState('loading');
+      
+      // Exchange the token
+      const exchangeToken = async () => {
+        try {
+          const response = await api.exchangeTokenWithStrava(code, scope);
+          
+          if (response.success) {
+            setStravaDialogState('success');
+            const firstName = response.athlete?.firstname || 'there';
+            if (response.athlete_created) {
+              setStravaMessage(`Great to have you onboard, ${firstName}! Now go outside and ride!`);
+            } else {
+              setStravaMessage(`Hello, ${firstName}! You are already subscribed to the leaderboard. Now go outside and ride!`);
+            }
+          } else {
+            setStravaDialogState('error');
+            setStravaMessage(`We couldn't sign you to the leaderboard. ${response.message}`);
+          }
+        } catch (error) {
+          setStravaDialogState('error');
+          setStravaMessage('We couldn\'t sign you to the leaderboard. An unexpected error occurred.');
+          console.error('Token exchange failed:', error);
+        }
+      };
+      
+      exchangeToken();
+      
+      // Clean up URL parameters
+      const newUrl = window.location.origin + window.location.pathname;
+      window.history.replaceState({}, document.title, newUrl);
+    }
+  }, []);
 
   // Load initial data
   useEffect(() => {
@@ -48,8 +107,45 @@ const Index = () => {
   const activeChallenge = challenges.find(c => c.status === 'active');
   const totalRiders = classification.length;
 
+  const handleStravaDialogClose = () => {
+    setShowStravaDialog(false);
+  };
+
   return (
-    <div className="min-h-screen bg-background">
+    <>
+      {/* Strava Authorization Dialog */}
+      <Dialog open={showStravaDialog} onOpenChange={setShowStravaDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>STRAVA Connection</DialogTitle>
+            <DialogDescription>
+              {stravaDialogState === 'loading' && 'Connecting with STRAVA...'}
+              {stravaDialogState === 'success' && 'Connection successful!'}
+              {stravaDialogState === 'error' && 'Connection failed'}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex flex-col items-center gap-6 py-6">
+            {stravaDialogState === 'loading' && (
+              <div className="flex items-center gap-2">
+                <Loader2 className="h-4 w-4 animate-spin" />
+                <span>Connecting with STRAVA...</span>
+              </div>
+            )}
+            {(stravaDialogState === 'success' || stravaDialogState === 'error') && (
+              <>
+                <p className="text-center text-sm text-muted-foreground">
+                  {stravaMessage}
+                </p>
+                <Button onClick={handleStravaDialogClose} className="w-full">
+                  OK
+                </Button>
+              </>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="border-b bg-card">
         <div className="container mx-auto px-4 py-4">
@@ -166,6 +262,7 @@ const Index = () => {
         </div>
       </footer>
     </div>
+    </>
   );
 };
 

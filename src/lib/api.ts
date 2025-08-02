@@ -52,34 +52,21 @@ class LeaderboardAPI {
     return this.request<Athlete[]>('/athletes');
   }
 
-  async joinLeaderboard(athleteData: Omit<Athlete, 'id'>): Promise<{ athlete: Athlete; strava_auth_url?: string }> {
-    const response = await fetch(`${API_BASE_URL}/athletes`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(athleteData),
-    });
-
+  // Token exchange endpoint
+  async exchangeTokenWithStrava(code: string, scope: string): Promise<{ 
+    success: boolean; 
+    message: string; 
+    athlete_created?: boolean; 
+    athlete?: { firstname: string; [key: string]: any } 
+  }> {
+    const params = new URLSearchParams();
+    params.append('code', code);
+    params.append('scope', scope);
+    
+    const response = await fetch(`${API_BASE_URL}/exchange_token?${params.toString()}`);
+    
     if (!response.ok) {
-      throw new Error(`Failed to join leaderboard: ${response.status}`);
-    }
-
-    return await response.json();
-  }
-
-  // STRAVA integration endpoints
-  async authorizeStrava(riderId: string, code: string): Promise<{ success: boolean }> {
-    const response = await fetch(`${API_BASE_URL}/strava/authorize`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ athlete_id: riderId, code }),
-    });
-
-    if (!response.ok) {
-      throw new Error(`STRAVA authorization failed: ${response.status}`);
+      throw new Error(`Token exchange failed: ${response.status}`);
     }
 
     return await response.json();
