@@ -23,10 +23,15 @@ export function ChallengeView({ challenges, category, gender, isLoading = false 
 
   const selectedChallenge = challenges.find(c => c.id === selectedChallengeId);
 
-  // Auto-select first challenge when challenges load
+  // Auto-select active challenge when challenges load, fallback to first challenge
   useEffect(() => {
     if (challenges.length > 0 && !selectedChallengeId) {
-      setSelectedChallengeId(challenges[0].id);
+      // First try to find an active challenge
+      const activeChallenge = challenges.find(challenge => challenge.status === 'active');
+      
+      // If active challenge exists, select it; otherwise select the first one
+      const challengeToSelect = activeChallenge || challenges[0];
+      setSelectedChallengeId(challengeToSelect.id);
     }
   }, [challenges, selectedChallengeId]);
 
