@@ -128,7 +128,9 @@ export function ChallengeView({ challenges, category, gender }: ChallengeViewPro
             <SelectValue placeholder="Select a challenge" />
           </SelectTrigger>
           <SelectContent>
-            {challenges.map((challenge) => (
+            {challenges
+              .sort((a, b) => new Date(a.start_date).getTime() - new Date(b.start_date).getTime())
+              .map((challenge) => (
               <SelectItem key={challenge.id} value={challenge.id}>
                 <div className="flex items-center gap-2">
                   <span>{challenge.name}</span>
