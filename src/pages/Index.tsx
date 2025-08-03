@@ -19,6 +19,7 @@ import { getChallenges, getClassification } from '@/lib/mockData';
 import { api } from '@/lib/api';
 import { useToast } from '@/hooks/use-toast';
 import { Trophy, Target, Calendar, Users, Loader2 } from 'lucide-react';
+import StravaLogo from '@/components/ui/strava-logo';
 
 const Index = () => {
   const [view, setView] = useState<ViewType>('classification');
@@ -261,6 +262,9 @@ const Index = () => {
           </div>
         </div>
       </footer>
+      
+      {/* Strava Logo */}
+      <StravaLogo />
     </div>
     </>
   );

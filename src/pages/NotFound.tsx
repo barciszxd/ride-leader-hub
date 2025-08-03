@@ -1,5 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import StravaLogo from "@/components/ui/strava-logo";
 
 const NotFound = () => {
   const location = useLocation();
@@ -20,6 +21,9 @@ const NotFound = () => {
           Return to Home
         </a>
       </div>
+      
+      {/* Strava Logo */}
+      <StravaLogo />
     </div>
   );
 };
