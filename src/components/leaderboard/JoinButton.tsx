@@ -39,9 +39,20 @@ export function JoinButton() {
           <Button 
             onClick={handleStravaConnect} 
             disabled={loading} 
-            className="w-full bg-[#fc4c02] hover:bg-[#e84402] text-white"
+            className="p-0 border-0 bg-transparent hover:bg-transparent disabled:bg-[#fc4c02] disabled:opacity-80"
+            style={{ width: '237px', height: '48px' }}
           >
-            {loading ? 'Connecting...' : 'Connect with STRAVA'}
+            {loading ? (
+              <div className="w-full h-full bg-[#fc4c02] rounded-md flex items-center justify-center text-white font-medium">
+                Connecting...
+              </div>
+            ) : (
+              <img 
+                src="/btn_strava_connect_with_orange.svg" 
+                alt="Connect with STRAVA" 
+                className="w-full h-full hover:opacity-90 transition-opacity"
+              />
+            )}
           </Button>
         </div>
       </DialogContent>
