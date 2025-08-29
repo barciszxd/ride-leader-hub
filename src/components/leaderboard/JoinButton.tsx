@@ -17,7 +17,7 @@ export function JoinButton() {
   const { toast } = useToast();
 
   const handleStravaConnect = async () => {
-    window.location.href = `http://www.strava.com/oauth/authorize?client_id=127158&response_type=code&redirect_uri=${window.location.origin}&approval_prompt=force&scope=read,activity:read`;
+    window.location.href = `http://www.strava.com/oauth/authorize?client_id=127158&response_type=code&redirect_uri=${window.location.origin}&scope=read,activity:read`;
   };
 
   return (
