@@ -19,7 +19,7 @@ import { Challenge, Classification, ViewType, FilterCategory, FilterGender } fro
 import { getChallenges, getClassification } from '@/lib/mockData';
 import { api } from '@/lib/api';
 import { useToast } from '@/hooks/use-toast';
-import { Trophy, Target, Calendar, Users, Loader2 } from 'lucide-react';
+import { Trophy, Target, Calendar, Users, Loader2, Zap, Mountain, User, Heart } from 'lucide-react';
 import StravaLogo from '@/components/ui/strava-logo';
 
 const Index = () => {
@@ -240,19 +240,19 @@ const Index = () => {
               </TabsList>
 
               {/* Filters */}
-              <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+              <div className="flex gap-2 shrink-0">
                 <FilterToggle
                   options={[
-                    { value: 'sprint', label: 'Sprint' },
-                    { value: 'climb', label: 'Climb' },
+                    { value: 'sprint', label: 'Sprint', icon: Zap },
+                    { value: 'climb', label: 'Climb', icon: Mountain },
                   ]}
                   value={category}
                   onChange={(value) => setCategory(value as FilterCategory)}
                 />
                 <FilterToggle
                   options={[
-                    { value: 'M', label: 'Men' },
-                    { value: 'F', label: 'Women' },
+                    { value: 'M', label: 'Men', icon: User },
+                    { value: 'F', label: 'Women', icon: Heart },
                   ]}
                   value={gender}
                   onChange={(value) => setGender(value as FilterGender)}
