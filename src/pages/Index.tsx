@@ -19,7 +19,8 @@ import { Challenge, Classification, ViewType, FilterCategory, FilterGender } fro
 import { getChallenges, getClassification } from '@/lib/mockData';
 import { api } from '@/lib/api';
 import { useToast } from '@/hooks/use-toast';
-import { Trophy, Target, Calendar, Users, Loader2, Zap, Mountain, User, Heart } from 'lucide-react';
+import { Trophy, Target, Calendar, Users, Loader2, Zap, Mountain } from 'lucide-react';
+import { MarsIcon, VenusIcon } from '@/components/ui/gender-icons';
 import StravaLogo from '@/components/ui/strava-logo';
 
 const Index = () => {
@@ -251,8 +252,8 @@ const Index = () => {
                 />
                 <FilterToggle
                   options={[
-                    { value: 'M', label: 'Men', icon: User },
-                    { value: 'F', label: 'Women', icon: Heart },
+                    { value: 'M', label: 'Men', icon: MarsIcon },
+                    { value: 'F', label: 'Women', icon: VenusIcon },
                   ]}
                   value={gender}
                   onChange={(value) => setGender(value as FilterGender)}
