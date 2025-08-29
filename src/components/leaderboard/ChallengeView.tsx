@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { SegmentBadge } from './SegmentBadge';
-import { Trophy, Medal, Award, Calendar, MapPin, TrendingUp } from 'lucide-react';
+import { Trophy, Medal, Award, Calendar, MoveUpRight, ExternalLink, Ruler } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { api } from '@/lib/api';
 
@@ -228,13 +228,22 @@ export function ChallengeView({ challenges, category, gender, isLoading = false 
             <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
               <div>
                 <CardTitle className="flex items-center gap-2">
-                  {selectedChallenge.name}
+                  <a 
+                    href={`https://strava.com/segments/${(category === 'sprint' ? selectedChallenge.sprint_segment : selectedChallenge.climb_segment).id}`} target="_blank" rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1">
+                    {(category === 'sprint' ? selectedChallenge.sprint_segment.name : selectedChallenge.climb_segment.name) || 'Unnamed Segment'}
+                    <ExternalLink className="w-4 h-4" />
+                  </a>
                   <SegmentBadge segment={category === 'sprint' ? selectedChallenge.sprint_segment : selectedChallenge.climb_segment} />
                 </CardTitle>
                 <div className="flex items-center gap-4 mt-2 text-sm text-muted-foreground">
                   <div className="flex items-center gap-1">
                     <Calendar className="w-4 h-4" />
                     {formatDate(selectedChallenge.start_date)} - {formatDate(selectedChallenge.end_date)}
+                    <Ruler className="w-4 h-4 ml-4" />
+                    {((category === 'sprint' ? selectedChallenge.sprint_segment.distance : selectedChallenge.climb_segment.distance) / 1000).toFixed(2)}km
+                    <MoveUpRight className="w-4 h-4 ml-4" />
+                    {category === 'sprint' ? selectedChallenge.sprint_segment.elevation_gain : selectedChallenge.climb_segment.elevation_gain}m
                   </div>
                 </div>
               </div>

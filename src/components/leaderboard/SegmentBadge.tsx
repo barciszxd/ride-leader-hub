@@ -28,8 +28,7 @@ export function SegmentBadge({ segment, className }: SegmentBadgeProps) {
       ) : (
         <Mountain className="w-3 h-3" />
       )}
-      <span className="max-w-32 truncate">{segment.name}</span>
-      <ExternalLink className="w-3 h-3 opacity-70" />
+      <span className="max-w-32 truncate">{segment.type.charAt(0).toUpperCase() + segment.type.slice(1)}</span>
     </button>
   );
 }
