@@ -14,6 +14,7 @@ import { ClassificationView } from '@/components/leaderboard/ClassificationView'
 import { ChallengeView } from '@/components/leaderboard/ChallengeView';
 import { FilterToggle } from '@/components/leaderboard/FilterToggle';
 import { JoinButton } from '@/components/leaderboard/JoinButton';
+import UserMenu from '@/components/leaderboard/UserMenu';
 import { Challenge, Classification, ViewType, FilterCategory, FilterGender } from '@/types/leaderboard';
 import { getChallenges, getClassification } from '@/lib/mockData';
 import { api } from '@/lib/api';
@@ -55,6 +56,12 @@ const Index = () => {
           if (response.success) {
             setStravaDialogState('success');
             const firstName = response.athlete?.firstname || 'there';
+            // Save profile_medium in a cookie for 7 days
+            const profileMedium = response.athlete?.profile_medium;
+            if (profileMedium) {
+              const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toUTCString();
+              document.cookie = `profile_medium=${encodeURIComponent(profileMedium)}; expires=${expires}; path=/`;
+            }
             if (response.athlete_created) {
               setStravaMessage(`Great to have you onboard, ${firstName}! Now go outside and ride!`);
             } else {
@@ -112,6 +119,21 @@ const Index = () => {
     setShowStravaDialog(false);
   };
 
+  // Helper to get cookie value
+  function getCookie(name: string) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop()?.split(';').shift();
+    return null;
+  }
+
+  const profileMediumCookie = getCookie('profile_medium');
+
+  const handleLogout = () => {
+    document.cookie = 'profile_medium=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    window.location.reload();
+  };
+
   return (
     <>
       {/* Strava Authorization Dialog */}
@@ -159,7 +181,12 @@ const Index = () => {
                 Track your performance across sprint and climb challenges
               </p>
             </div>
-            <JoinButton />
+            {/* Show JoinButton if no cookie, else show avatar menu */}
+            {!profileMediumCookie ? (
+              <JoinButton />
+            ) : (
+              <UserMenu profileMediumUrl={decodeURIComponent(profileMediumCookie)} onLogout={handleLogout} />
+            )}
           </div>
         </div>
       </header>
