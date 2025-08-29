@@ -228,8 +228,8 @@ const Index = () => {
         <div className="space-y-6">
           {/* Navigation Tabs */}
           <Tabs value={view} onValueChange={(value) => setView(value as ViewType)}>
-            <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-              <TabsList className="grid w-full sm:w-auto grid-cols-2">
+            <div className="flex flex-row gap-4 items-center justify-between">
+              <TabsList className="grid w-auto grid-cols-2">
                 <TabsTrigger value="classification" className="flex items-center gap-2">
                   <Trophy className="w-4 h-4 flex-shrink-0" />
                   <span className="hidden md:inline">General Classification</span>
