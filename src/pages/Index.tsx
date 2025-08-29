@@ -230,12 +230,12 @@ const Index = () => {
             <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
               <TabsList className="grid w-full sm:w-auto grid-cols-2">
                 <TabsTrigger value="classification" className="flex items-center gap-2">
-                  <Trophy className="w-4 h-4" />
-                  General Classification
+                  <Trophy className="w-4 h-4 flex-shrink-0" />
+                  <span className="hidden md:inline">General Classification</span>
                 </TabsTrigger>
                 <TabsTrigger value="challenges" className="flex items-center gap-2">
-                  <Target className="w-4 h-4" />
-                  Individual Challenges
+                  <Target className="w-4 h-4 flex-shrink-0" />
+                  <span className="hidden md:inline">Individual Challenges</span>
                 </TabsTrigger>
               </TabsList>
 
