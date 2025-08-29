@@ -232,11 +232,11 @@ const Index = () => {
               <TabsList className="grid w-auto grid-cols-2">
                 <TabsTrigger value="classification" className="flex items-center gap-2">
                   <Trophy className="w-4 h-4 flex-shrink-0" />
-                  <span className="hidden md:inline">General Classification</span>
+                  <span className="hidden sm:inline">Classification</span>
                 </TabsTrigger>
                 <TabsTrigger value="challenges" className="flex items-center gap-2">
                   <Target className="w-4 h-4 flex-shrink-0" />
-                  <span className="hidden md:inline">Individual Challenges</span>
+                  <span className="hidden sm:inline">Challenges</span>
                 </TabsTrigger>
               </TabsList>
 
