@@ -3,7 +3,7 @@ import { Classification, FilterCategory, FilterGender } from '@/types/leaderboar
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Trophy, Medal, Award } from 'lucide-react';
+import { Shirt, Medal, Award } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface ClassificationViewProps {
@@ -28,29 +28,20 @@ export function ClassificationView({ data, category, gender, isLoading = false }
   }, [data, category, gender]);
 
   const getPositionIcon = (position: number) => {
-    switch (position) {
-      case 1:
-        return <Trophy className="w-5 h-5 text-gold" />;
-      case 2:
-        return <Medal className="w-5 h-5 text-silver" />;
-      case 3:
-        return <Award className="w-5 h-5 text-bronze" />;
-      default:
-        return null;
+    if (position === 1) {
+      return <Shirt className={cn("w-5 h-5 [stroke-width:0]", category === 'sprint' ? "[fill:green]" : "[fill:red]")} />;
     }
   };
 
   const getPositionStyle = (position: number) => {
-    switch (position) {
-      case 1:
-        return 'bg-gradient-to-r from-gold/10 to-gold/5 border-gold/20';
-      case 2:
-        return 'bg-gradient-to-r from-silver/10 to-silver/5 border-silver/20';
-      case 3:
-        return 'bg-gradient-to-r from-bronze/10 to-bronze/5 border-bronze/20';
-      default:
-        return 'bg-card border-border';
+    if (position === 1) {
+      if (category === 'sprint') {
+        return 'bg-green-400/5 border-green-500';
+      } else {
+        return 'bg-[url("/PolkaDot.jpg")] bg-[length:10rem_10rem] border-red-500';
+      }
     }
+    return '';
   };
 
   const categoryTitle = category === 'sprint' ? 'Sprint Classification' : 'Climb Classification';

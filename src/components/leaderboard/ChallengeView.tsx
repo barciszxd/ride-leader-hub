@@ -84,9 +84,9 @@ export function ChallengeView({ challenges, category, gender, isLoading = false 
   const getPositionIcon = (position: number) => {
     switch (position) {
       case 1:
-        return <Trophy className="w-4 h-4 text-gold" />;
+        return <Award className="w-4 h-4 text-gold" />;
       case 2:
-        return <Medal className="w-4 h-4 text-silver" />;
+        return <Award className="w-4 h-4 text-silver" />;
       case 3:
         return <Award className="w-4 h-4 text-bronze" />;
       default:
@@ -96,12 +96,12 @@ export function ChallengeView({ challenges, category, gender, isLoading = false 
 
   const getPositionStyle = (position: number) => {
     switch (position) {
-      case 1:
-        return 'bg-gradient-to-r from-gold/10 to-gold/5 border-gold/20';
-      case 2:
-        return 'bg-gradient-to-r from-silver/10 to-silver/5 border-silver/20';
-      case 3:
-        return 'bg-gradient-to-r from-bronze/10 to-bronze/5 border-bronze/20';
+      // case 1:
+      //   return 'bg-gradient-to-r from-gold/10 to-gold/5 border-gold/20';
+      // case 2:
+      //   return 'bg-gradient-to-r from-silver/10 to-silver/5 border-silver/20';
+      // case 3:
+      //   return 'bg-gradient-to-r from-bronze/10 to-bronze/5 border-bronze/20';
       default:
         return 'bg-card border-border';
     }
