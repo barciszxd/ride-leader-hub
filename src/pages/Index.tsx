@@ -13,6 +13,7 @@ import {
 import { ClassificationView } from '@/components/leaderboard/ClassificationView';
 import { ChallengeView } from '@/components/leaderboard/ChallengeView';
 import { ChallengesOverview } from '@/components/leaderboard/ChallengesOverview';
+import { RidersOverview } from '@/components/leaderboard/RidersOverview';
 import { FilterToggle } from '@/components/leaderboard/FilterToggle';
 import { SignUpButton } from '@/components/leaderboard/JoinButton';
 import UserMenu from '@/components/leaderboard/UserMenu';
@@ -38,6 +39,7 @@ const Index = () => {
   const [stravaDialogState, setStravaDialogState] = useState<'loading' | 'success' | 'error'>('loading');
   const [stravaMessage, setStravaMessage] = useState('');
   const [showChallengesOverview, setShowChallengesOverview] = useState(false);
+  const [showRidersOverview, setShowRidersOverview] = useState(false);
   const { toast } = useToast();
 
   // Check for Strava callback on component mount
@@ -178,6 +180,12 @@ const Index = () => {
         onOpenChange={setShowChallengesOverview}
       />
 
+      <RidersOverview
+        athletes={classification.map(c => ({ id: c.athlete_id, name: c.athlete_name, gender: c.gender }))}
+        open={showRidersOverview}
+        onOpenChange={setShowRidersOverview}
+      />
+
       <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="border-b bg-card">
@@ -209,7 +217,10 @@ const Index = () => {
       <div className="border-b bg-muted/30">
         <div className="container mx-auto px-4 py-4">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <div className="flex items-center gap-2">
+            <div 
+              className="flex items-center gap-2 cursor-pointer hover:opacity-80"
+              onClick={() => setShowRidersOverview(true)}
+            >
               <Users className="w-4 h-4 text-primary" />
               <span className="text-sm text-muted-foreground">
                 <strong className="text-foreground">{totalRiders}</strong> riders
