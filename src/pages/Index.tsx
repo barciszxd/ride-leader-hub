@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/dialog';
 import { ClassificationView } from '@/components/leaderboard/ClassificationView';
 import { ChallengeView } from '@/components/leaderboard/ChallengeView';
+import { ChallengesOverview } from '@/components/leaderboard/ChallengesOverview';
 import { FilterToggle } from '@/components/leaderboard/FilterToggle';
 import { SignUpButton } from '@/components/leaderboard/JoinButton';
 import UserMenu from '@/components/leaderboard/UserMenu';
@@ -36,6 +37,7 @@ const Index = () => {
   const [showStravaDialog, setShowStravaDialog] = useState(false);
   const [stravaDialogState, setStravaDialogState] = useState<'loading' | 'success' | 'error'>('loading');
   const [stravaMessage, setStravaMessage] = useState('');
+  const [showChallengesOverview, setShowChallengesOverview] = useState(false);
   const { toast } = useToast();
 
   // Check for Strava callback on component mount
@@ -169,6 +171,13 @@ const Index = () => {
         </DialogContent>
       </Dialog>
 
+      {/* Challenges Overview Dialog */}
+      <ChallengesOverview 
+        challenges={challenges}
+        open={showChallengesOverview}
+        onOpenChange={setShowChallengesOverview}
+      />
+
       <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="border-b bg-card">
@@ -206,7 +215,10 @@ const Index = () => {
                 <strong className="text-foreground">{totalRiders}</strong> riders
               </span>
             </div>
-            <div className="flex items-center gap-2">
+            <div 
+              className="flex items-center gap-2 cursor-pointer hover:opacity-80" 
+              onClick={() => setShowChallengesOverview(true)}
+            >
               <Target className="w-4 h-4 text-primary" />
               <span className="text-sm text-muted-foreground">
                 <strong className="text-foreground">{challenges.length}</strong> challenges

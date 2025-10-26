@@ -18,7 +18,6 @@ export interface Segment {
   id: string;
   name: string;
   type: 'sprint' | 'climb';
-  strava_segment_id: string;
   distance: number; // in meters
   elevation_gain?: number; // in meters
 }
