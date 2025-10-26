@@ -13,7 +13,7 @@ import {
 import { ClassificationView } from '@/components/leaderboard/ClassificationView';
 import { ChallengeView } from '@/components/leaderboard/ChallengeView';
 import { FilterToggle } from '@/components/leaderboard/FilterToggle';
-import { JoinButton } from '@/components/leaderboard/JoinButton';
+import { SignUpButton } from '@/components/leaderboard/JoinButton';
 import UserMenu from '@/components/leaderboard/UserMenu';
 import { Challenge, Classification, ViewType, FilterCategory, FilterGender } from '@/types/leaderboard';
 import { getChallenges, getClassification } from '@/lib/mockData';
@@ -173,21 +173,25 @@ const Index = () => {
       {/* Header */}
       <header className="border-b bg-card">
         <div className="container mx-auto px-4 py-4">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div>
+          <div className="flex flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <img 
+                src="/CORA_Logo.jpg" 
+                alt="CORA Logo" 
+                className="object-contain"
+              />
               <h1 className="text-2xl sm:text-3xl font-bold text-foreground">
-                Cycling Club Leaderboard
+                Leaderboard
               </h1>
-              <p className="text-muted-foreground mt-1">
-                Track your performance across sprint and climb challenges
-              </p>
             </div>
-            {/* Show JoinButton if no cookie, else show avatar menu */}
-            {!profileMediumCookie ? (
-              <JoinButton />
-            ) : (
-              <UserMenu profileMediumUrl={decodeURIComponent(profileMediumCookie)} onLogout={handleLogout} />
-            )}
+            <div className="shrink-0">
+              {/* Show SignUpButton if no cookie, else show avatar menu */}
+              {!profileMediumCookie ? (
+                <SignUpButton />
+              ) : (
+                <UserMenu profileMediumUrl={decodeURIComponent(profileMediumCookie)} onLogout={handleLogout} />
+              )}
+            </div>
           </div>
         </div>
       </header>
@@ -286,7 +290,7 @@ const Index = () => {
       <footer className="border-t bg-card mt-12">
         <div className="container mx-auto px-4 py-6">
           <div className="text-center text-sm text-muted-foreground">
-            <p>© 2024 Cycling Club Leaderboard. Track your progress, compete with friends.</p>
+            <p>© 2024 CORA Leaderboard. Track your progress, compete with friends.</p>
           </div>
         </div>
       </footer>
