@@ -25,7 +25,7 @@ export function SignUpButton() {
       <DialogTrigger asChild>
         <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
           <UserPlus className="mr-2 h-4 w-4" />
-          Sign up
+          <span className="hidden sm:inline">Sign up</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
