@@ -67,7 +67,6 @@ export function ClassificationView({ data, category, gender, isLoading = false }
           
           <div>
             <Skeleton className="h-6 w-32 mb-2" />
-            <Skeleton className="h-5 w-16" />
           </div>
         </div>
 
@@ -119,14 +118,6 @@ export function ClassificationView({ data, category, gender, isLoading = false }
                     
                     <div>
                       <h3 className="font-semibold text-foreground">{rider.athlete_name}</h3>
-                      <div className="flex items-center gap-2 mt-1">
-                        <Badge 
-                          variant="secondary" 
-                          className="text-xs"
-                        >
-                          {rider.gender === 'M' ? 'Men' : 'Women'}
-                        </Badge>
-                      </div>
                     </div>
                   </div>
 
