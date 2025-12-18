@@ -32,7 +32,7 @@ export function SignUpButton() {
         <DialogHeader>
           <DialogTitle>Sign up</DialogTitle>
           <DialogDescription>
-            Sign up with your STRAVA account to join the leaderboard and compete in our cycling challenges.
+            Log in to your STRAVA account to compete in our challenges.
           </DialogDescription>
         </DialogHeader>
         <div className="flex flex-col items-center gap-6 py-6">

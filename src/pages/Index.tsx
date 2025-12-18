@@ -68,9 +68,9 @@ const Index = () => {
               document.cookie = `profile_medium=${encodeURIComponent(profileMedium)}; expires=${expires}; path=/`;
             }
             if (response.athlete_created) {
-              setStravaMessage(`Great to have you onboard, ${firstName}! Now go outside and ride!`);
+              setStravaMessage(`Great to have you onboard, ${firstName}!`);
             } else {
-              setStravaMessage(`Hello, ${firstName}! You are already subscribed to the leaderboard. Now go outside and ride!`);
+              setStravaMessage(`Nice to see you again, ${firstName}!`);
             }
           } else {
             setStravaDialogState('error');
