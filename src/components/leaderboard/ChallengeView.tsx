@@ -23,15 +23,24 @@ export function ChallengeView({ challenges, category, gender, isLoading = false 
 
   const selectedChallenge = challenges.find(c => c.id === selectedChallengeId);
 
-  // Auto-select active challenge when challenges load, fallback to first challenge
+  // Auto-select active challenge when challenges load, fallback to challenge nearest to now
   useEffect(() => {
     if (challenges.length > 0 && !selectedChallengeId) {
       // First try to find an active challenge
       const activeChallenge = challenges.find(challenge => challenge.status === 'active');
-      
-      // If active challenge exists, select it; otherwise select the first one
-      const challengeToSelect = activeChallenge || challenges[0];
-      setSelectedChallengeId(challengeToSelect.id);
+      if (activeChallenge) {
+        setSelectedChallengeId(activeChallenge.id);
+      } else {
+        // No active challenge — pick the one whose start_date is closest to now
+        const now = Date.now();
+        const nearest = challenges.reduce((best, c) => {
+          const bestDiff = Math.abs(new Date(best.start_date).getTime() - now);
+          const cDiff = Math.abs(new Date(c.start_date).getTime() - now);
+          return cDiff < bestDiff ? c : best;
+        }, challenges[0]);
+
+        setSelectedChallengeId(nearest.id);
+      }
     }
   }, [challenges, selectedChallengeId]);
 
