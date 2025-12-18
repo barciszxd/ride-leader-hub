@@ -6,7 +6,6 @@ export interface Athlete {
 
 export interface Challenge {
   id: string;
-  name: string;
   start_date: string;
   end_date: string;
   sprint_segment: Segment;

@@ -4,8 +4,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Button } from '@/components/ui/button';
 import { SegmentBadge } from './SegmentBadge';
-import { Trophy, Medal, Award, Calendar, MoveUpRight, ExternalLink, Ruler } from 'lucide-react';
+import { Trophy, Medal, Award, Calendar, MoveUpRight, ExternalLink, Ruler, ChevronLeft, ChevronRight, Play } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { api } from '@/lib/api';
 
@@ -23,21 +24,26 @@ export function ChallengeView({ challenges, category, gender, isLoading = false 
 
   const selectedChallenge = challenges.find(c => c.id === selectedChallengeId);
 
+  // Sorted copy of challenges (do not mutate original array)
+  const sortedChallenges = useMemo(() => {
+    return [...challenges].sort((a, b) => new Date(a.start_date).getTime() - new Date(b.start_date).getTime());
+  }, [challenges]);
+
   // Auto-select active challenge when challenges load, fallback to challenge nearest to now
   useEffect(() => {
-    if (challenges.length > 0 && !selectedChallengeId) {
+    if (sortedChallenges.length > 0 && !selectedChallengeId) {
       // First try to find an active challenge
-      const activeChallenge = challenges.find(challenge => challenge.status === 'active');
+      const activeChallenge = sortedChallenges.find(challenge => challenge.status === 'active');
       if (activeChallenge) {
         setSelectedChallengeId(activeChallenge.id);
       } else {
         // No active challenge — pick the one whose start_date is closest to now
         const now = Date.now();
-        const nearest = challenges.reduce((best, c) => {
+        const nearest = sortedChallenges.reduce((best, c) => {
           const bestDiff = Math.abs(new Date(best.start_date).getTime() - now);
           const cDiff = Math.abs(new Date(c.start_date).getTime() - now);
           return cDiff < bestDiff ? c : best;
-        }, challenges[0]);
+        }, sortedChallenges[0]);
 
         setSelectedChallengeId(nearest.id);
       }
@@ -199,36 +205,58 @@ export function ChallengeView({ challenges, category, gender, isLoading = false 
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold text-foreground">Challenge Results</h2>
-          <p className="text-muted-foreground">
-            View individual challenge leaderboards
-          </p>
-        </div>
-        
+      <div className="text-center">
+        <h2 className="text-2xl font-bold text-foreground">Challenge Results</h2>
+      </div>
+
+      <div className="flex items-center justify-center gap-2">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => {
+            const idx = sortedChallenges.findIndex(c => c.id === selectedChallengeId);
+            if (idx > 0) setSelectedChallengeId(sortedChallenges[idx - 1].id);
+          }}
+          disabled={sortedChallenges.findIndex(c => c.id === selectedChallengeId) <= 0}
+          aria-label="Previous challenge"
+        >
+          <ChevronLeft className="w-4 h-4" />
+        </Button>
+
         <Select value={selectedChallengeId} onValueChange={setSelectedChallengeId}>
-          <SelectTrigger className="w-full sm:w-64">
+          <SelectTrigger className="w-full sm:w-48">
             <SelectValue placeholder="Select a challenge" />
           </SelectTrigger>
           <SelectContent>
-            {challenges
-              .sort((a, b) => new Date(a.start_date).getTime() - new Date(b.start_date).getTime())
-              .map((challenge) => (
+            {sortedChallenges.map((challenge) => (
               <SelectItem key={challenge.id} value={challenge.id}>
-                <div className="flex items-center gap-2">
-                  <span>{challenge.name}</span>
-                  <Badge 
-                    variant={challenge.status === 'active' ? 'default' : 'secondary'}
-                    className="text-xs"
-                  >
-                    {challenge.status}
-                  </Badge>
+                <div className="flex items-center justify-between w-full">
+                  <div className="flex items-center gap-2">
+                    <div className="text-xs text-muted-foreground">
+                      {formatDate(challenge.start_date)} - {formatDate(challenge.end_date)}
+                    </div>
+                    {challenge.status === 'active' && (
+                      <Play className="w-4 h-4 text-primary" />
+                    )}
+                  </div>
                 </div>
               </SelectItem>
             ))}
           </SelectContent>
         </Select>
+
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => {
+            const idx = sortedChallenges.findIndex(c => c.id === selectedChallengeId);
+            if (idx >= 0 && idx < sortedChallenges.length - 1) setSelectedChallengeId(sortedChallenges[idx + 1].id);
+          }}
+          disabled={sortedChallenges.findIndex(c => c.id === selectedChallengeId) === -1 || sortedChallenges.findIndex(c => c.id === selectedChallengeId) >= sortedChallenges.length - 1}
+          aria-label="Next challenge"
+        >
+          <ChevronRight className="w-4 h-4" />
+        </Button>
       </div>
 
       {selectedChallenge && (
@@ -247,9 +275,7 @@ export function ChallengeView({ challenges, category, gender, isLoading = false 
                 </CardTitle>
                 <div className="flex items-center gap-4 mt-2 text-sm text-muted-foreground">
                   <div className="flex items-center gap-1">
-                    <Calendar className="w-4 h-4" />
-                    {formatDate(selectedChallenge.start_date)} - {formatDate(selectedChallenge.end_date)}
-                    <Ruler className="w-4 h-4 ml-4" />
+                    <Ruler className="w-4 h-4" />
                     {((category === 'sprint' ? selectedChallenge.sprint_segment.distance : selectedChallenge.climb_segment.distance) / 1000).toFixed(2)}km
                     <MoveUpRight className="w-4 h-4 ml-4" />
                     {category === 'sprint' ? selectedChallenge.sprint_segment.elevation_gain : selectedChallenge.climb_segment.elevation_gain}m
