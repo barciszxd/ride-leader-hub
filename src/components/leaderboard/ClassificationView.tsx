@@ -85,6 +85,11 @@ export function ClassificationView({ data, category, gender, isLoading = false }
         <p className="text-muted-foreground">{genderTitle} Standings</p>
       </div>
 
+      <div className="flex items-center justify-between text-sm font-medium text-muted-foreground border-b pb-2">
+        <span>Rider</span>
+        <span>Points</span>
+      </div>
+
       <div className="space-y-3">
         {isLoading ? (
           // Show skeleton cards while loading
@@ -96,6 +101,8 @@ export function ClassificationView({ data, category, gender, isLoading = false }
           filteredData.map((rider, index) => {
             const position = index + 1;
             const points = category === 'sprint' ? rider.total_sprint_points : rider.total_climb_points;
+            const counted = category === 'sprint' ? rider.counted_sprints : rider.counted_climbs;
+            const completed = category === 'sprint' ? rider.completed_sprints : rider.completed_climbs;
             
             return (
               <Card
@@ -126,7 +133,7 @@ export function ClassificationView({ data, category, gender, isLoading = false }
                       {points}
                     </div>
                     <div className="text-xs text-muted-foreground">
-                      points
+                      {counted}/{completed}
                     </div>
                   </div>
                 </CardContent>
