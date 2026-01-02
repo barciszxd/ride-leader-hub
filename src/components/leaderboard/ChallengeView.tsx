@@ -123,9 +123,11 @@ export function ChallengeView({ challenges, category, gender, isLoading = false 
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
       month: 'short',
       day: 'numeric',
+      timeZone: 'UTC', // Ensure UTC is used
     });
   };
 
@@ -135,9 +137,6 @@ export function ChallengeView({ challenges, category, gender, isLoading = false 
         <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
           <div>
             <h2 className="text-2xl font-bold text-foreground">Challenge Results</h2>
-            <p className="text-muted-foreground">
-              View individual challenge leaderboards
-            </p>
           </div>
           
           <Skeleton className="h-10 w-full sm:w-64" />
