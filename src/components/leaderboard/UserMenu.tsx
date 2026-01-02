@@ -50,7 +50,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ profileMediumUrl, onLogout }) => {
             }}
             onClick={onLogout}
           >
-            Log out
+            Ausloggen
           </button>
         </div>
       )}
