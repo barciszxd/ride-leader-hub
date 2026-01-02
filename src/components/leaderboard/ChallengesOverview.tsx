@@ -18,7 +18,7 @@ export const ChallengesOverview = ({ challenges, open, onOpenChange }: Challenge
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-3xl">
         <DialogHeader>
-          <DialogTitle>Challenges Overview</DialogTitle>
+          <DialogTitle>Herausforderungen</DialogTitle>
         </DialogHeader>
         <div className="space-y-4">
           <table className="w-full">
@@ -27,19 +27,19 @@ export const ChallengesOverview = ({ challenges, open, onOpenChange }: Challenge
                 <th className="text-left py-2 px-4 font-medium" style={{ width: '200px' }}>
                   <div className="flex items-center gap-2">
                     <Calendar className="w-4 h-4" />
-                    <span>Time Span</span>
+                    <span>Datum</span>
                   </div>
                 </th>
                 <th className="text-left py-2 px-4 font-medium">
                   <div className="flex items-center gap-2">
                     <Zap className="w-4 h-4" />
-                    <span>Sprint Segment</span>
+                    <span>Sprint</span>
                   </div>
                 </th>
                 <th className="text-left py-2 px-4 font-medium">
                   <div className="flex items-center gap-2">
                     <Mountain className="w-4 h-4" />
-                    <span>Climb Segment</span>
+                    <span>Berg</span>
                   </div>
                 </th>
               </tr>
@@ -48,12 +48,12 @@ export const ChallengesOverview = ({ challenges, open, onOpenChange }: Challenge
               {challenges.map((challenge) => (
                 <tr key={challenge.id} className="border-b">
                   <td className="py-2 px-4">
-                    {new Date(challenge.start_date).toLocaleDateString('en-GB', { 
+                    {new Date(challenge.start_date).toLocaleDateString('de-DE', { 
                       day: 'numeric', 
-                      month: 'short'
-                    })} - {new Date(challenge.end_date).toLocaleDateString('en-GB', { 
+                      month: '2-digit'
+                    })} bis {new Date(challenge.end_date).toLocaleDateString('de-DE', { 
                       day: 'numeric', 
-                      month: 'short'
+                      month: '2-digit'
                     })}
                   </td>
                     <td className="py-2 px-4">
