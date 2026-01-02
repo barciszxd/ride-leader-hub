@@ -44,8 +44,8 @@ export function ClassificationView({ data, category, gender, isLoading = false }
     return '';
   };
 
-  const categoryTitle = category === 'sprint' ? 'Sprint Classification' : 'Climb Classification';
-  const genderTitle = gender === 'M' ? 'Men' : 'Women';
+  const categoryTitle = category === 'sprint' ? 'Sprintwertung' : 'Bergwertung';
+  const genderTitle = gender === 'M' ? 'Männer' : 'Frauen';
 
   // Loading skeleton component
   const SkeletonCard = ({ position }: { position: number }) => (
@@ -82,12 +82,12 @@ export function ClassificationView({ data, category, gender, isLoading = false }
     <div className="space-y-6">
       <div className="text-center">
         <h2 className="text-2xl font-bold text-foreground">{categoryTitle}</h2>
-        <p className="text-muted-foreground">{genderTitle} Standings</p>
+        <p className="text-muted-foreground">{genderTitle}</p>
       </div>
 
       <div className="flex items-center justify-between text-sm font-medium text-muted-foreground border-b pb-2">
-        <span>Rider</span>
-        <span>Points</span>
+        <span>Fahrer</span>
+        <span>Punkte</span>
       </div>
 
       <div className="space-y-3">
@@ -147,7 +147,7 @@ export function ClassificationView({ data, category, gender, isLoading = false }
         <Card>
           <CardContent className="text-center py-8">
             <p className="text-muted-foreground">
-              No riders found for the selected filters.
+              Keine Ergebnisse gefunden.
             </p>
           </CardContent>
         </Card>
