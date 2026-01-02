@@ -145,18 +145,18 @@ const Index = () => {
       <Dialog open={showStravaDialog} onOpenChange={setShowStravaDialog}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>STRAVA Connection</DialogTitle>
+            <DialogTitle>STRAVA Verbindung</DialogTitle>
             <DialogDescription>
-              {stravaDialogState === 'loading' && 'Connecting with STRAVA...'}
-              {stravaDialogState === 'success' && 'Connection successful!'}
-              {stravaDialogState === 'error' && 'Connection failed'}
+              {stravaDialogState === 'loading' && 'Verbinde mit STRAVA...'}
+              {stravaDialogState === 'success' && 'Verbindung erfolgreich!'}
+              {stravaDialogState === 'error' && 'Verbindung fehlgeschlagen'}
             </DialogDescription>
           </DialogHeader>
           <div className="flex flex-col items-center gap-6 py-6">
             {stravaDialogState === 'loading' && (
               <div className="flex items-center gap-2">
                 <Loader2 className="h-4 w-4 animate-spin" />
-                <span>Connecting with STRAVA...</span>
+                <span>Verbinde mit STRAVA...</span>
               </div>
             )}
             {(stravaDialogState === 'success' || stravaDialogState === 'error') && (
@@ -223,7 +223,7 @@ const Index = () => {
             >
               <Users className="w-4 h-4 text-primary" />
               <span className="text-sm text-muted-foreground">
-                <strong className="text-foreground">{totalRiders}</strong> riders
+                <strong className="text-foreground">{totalRiders}</strong> Fahrer
               </span>
             </div>
             <div 
@@ -232,14 +232,14 @@ const Index = () => {
             >
               <Target className="w-4 h-4 text-primary" />
               <span className="text-sm text-muted-foreground">
-                <strong className="text-foreground">{challenges.length}</strong> challenges
+                <strong className="text-foreground">{challenges.length}</strong> Herausforderungen
               </span>
             </div>
             {activeChallenge && (
               <div className="flex items-center gap-2 col-span-2 sm:col-span-2">
                 <Calendar className="w-4 h-4 text-primary" />
                 <span className="text-sm text-muted-foreground">
-                  Active: <strong className="text-foreground">{activeChallenge.name}</strong>
+                  Aktiv: <strong className="text-foreground">{activeChallenge.name}</strong>
                 </span>
                 <Badge variant="default" className="text-xs">
                   Live
@@ -259,11 +259,11 @@ const Index = () => {
               <TabsList className="grid w-auto grid-cols-2">
                 <TabsTrigger value="classification" className="flex items-center gap-2">
                   <Trophy className="w-4 h-4 flex-shrink-0" />
-                  <span className="hidden sm:inline">Classification</span>
+                  <span className="hidden sm:inline">Gesamtwertung</span>
                 </TabsTrigger>
                 <TabsTrigger value="challenges" className="flex items-center gap-2">
                   <Target className="w-4 h-4 flex-shrink-0" />
-                  <span className="hidden sm:inline">Challenges</span>
+                  <span className="hidden sm:inline">Herausforderungen</span>
                 </TabsTrigger>
               </TabsList>
 
@@ -272,15 +272,15 @@ const Index = () => {
                 <FilterToggle
                   options={[
                     { value: 'sprint', label: 'Sprint', icon: Zap },
-                    { value: 'climb', label: 'Climb', icon: Mountain },
+                    { value: 'climb', label: 'Berg', icon: Mountain },
                   ]}
                   value={category}
                   onChange={(value) => setCategory(value as FilterCategory)}
                 />
                 <FilterToggle
                   options={[
-                    { value: 'M', label: 'Men', icon: MarsIcon },
-                    { value: 'F', label: 'Women', icon: VenusIcon },
+                    { value: 'M', label: 'Männer', icon: MarsIcon },
+                    { value: 'F', label: 'Frauen', icon: VenusIcon },
                   ]}
                   value={gender}
                   onChange={(value) => setGender(value as FilterGender)}
