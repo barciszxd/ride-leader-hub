@@ -6,7 +6,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { User } from 'lucide-react';
-import { MarsIcon, VenusIcon } from '@/components/ui/gender-icons';
+import { MarsIcon, VenusIcon, VenusAndMarsIcon } from '@/components/ui/gender-icons';
 
 interface RidersOverviewProps {
   athletes: Athlete[];
@@ -19,7 +19,7 @@ export const RidersOverview = ({ athletes, open, onOpenChange }: RidersOverviewP
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-2xl">
         <DialogHeader>
-          <DialogTitle>Riders Overview</DialogTitle>
+          <DialogTitle>Fahrer</DialogTitle>
         </DialogHeader>
         <div className="space-y-4">
           <table className="w-full">
@@ -28,12 +28,12 @@ export const RidersOverview = ({ athletes, open, onOpenChange }: RidersOverviewP
                 <th className="text-left py-2 px-4 font-medium">
                   <div className="flex items-center gap-2">
                     <User className="w-4 h-4" />
-                    <span>Rider</span>
+                    <span>Name</span>
                   </div>
                 </th>
                 <th className="text-left py-2 px-4 font-medium w-24">
                   <div className="flex items-center gap-2">
-                    <span>Gender</span>
+                    <VenusAndMarsIcon className="w-4 h-4" />
                   </div>
                 </th>
               </tr>
