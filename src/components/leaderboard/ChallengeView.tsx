@@ -124,7 +124,7 @@ export function ChallengeView({ challenges, category, gender, isLoading = false 
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
+    return date.toLocaleDateString('de-DE', {
       month: 'short',
       day: 'numeric',
       timeZone: 'UTC', // Ensure UTC is used
@@ -136,7 +136,7 @@ export function ChallengeView({ challenges, category, gender, isLoading = false 
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
           <div>
-            <h2 className="text-2xl font-bold text-foreground">Challenge Results</h2>
+            <h2 className="text-2xl font-bold text-foreground">Herausforderung</h2>
           </div>
           
           <Skeleton className="h-10 w-full sm:w-64" />
@@ -158,8 +158,8 @@ export function ChallengeView({ challenges, category, gender, isLoading = false 
           <CardContent>
             <div className="space-y-2">
               <div className="flex items-center justify-between text-sm font-medium text-muted-foreground border-b pb-2">
-                <span>Rider</span>
-                <span>Time</span>
+                <span>Fahrer</span>
+                <span>Zeit</span>
               </div>
               
               {Array.from({ length: 6 }, (_, index) => (
@@ -205,7 +205,7 @@ export function ChallengeView({ challenges, category, gender, isLoading = false 
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h2 className="text-2xl font-bold text-foreground">Challenge Results</h2>
+        <h2 className="text-2xl font-bold text-foreground">Herausforderung</h2>
       </div>
 
       <div className="flex items-center justify-center gap-2">
@@ -217,14 +217,14 @@ export function ChallengeView({ challenges, category, gender, isLoading = false 
             if (idx > 0) setSelectedChallengeId(sortedChallenges[idx - 1].id);
           }}
           disabled={sortedChallenges.findIndex(c => c.id === selectedChallengeId) <= 0}
-          aria-label="Previous challenge"
+          aria-label="Vorherige Herausforderung"
         >
           <ChevronLeft className="w-4 h-4" />
         </Button>
 
         <Select value={selectedChallengeId} onValueChange={setSelectedChallengeId}>
           <SelectTrigger className="w-full sm:w-48">
-            <SelectValue placeholder="Select a challenge" />
+            <SelectValue placeholder="Herausforderung auswählen" />
           </SelectTrigger>
           <SelectContent>
             {sortedChallenges.map((challenge) => (
@@ -252,7 +252,7 @@ export function ChallengeView({ challenges, category, gender, isLoading = false 
             if (idx >= 0 && idx < sortedChallenges.length - 1) setSelectedChallengeId(sortedChallenges[idx + 1].id);
           }}
           disabled={sortedChallenges.findIndex(c => c.id === selectedChallengeId) === -1 || sortedChallenges.findIndex(c => c.id === selectedChallengeId) >= sortedChallenges.length - 1}
-          aria-label="Next challenge"
+          aria-label="Nächste Herausforderung"
         >
           <ChevronRight className="w-4 h-4" />
         </Button>
@@ -286,8 +286,8 @@ export function ChallengeView({ challenges, category, gender, isLoading = false 
           <CardContent>
             <div className="space-y-2">
               <div className="flex items-center justify-between text-sm font-medium text-muted-foreground border-b pb-2">
-                <span>Rider</span>
-                <span>Time</span>
+                <span>Fahrer</span>
+                <span>Zeit</span>
               </div>
               
               {isLoadingResults ? (
@@ -341,7 +341,7 @@ export function ChallengeView({ challenges, category, gender, isLoading = false 
                           </h4>
                           <div className="flex items-center gap-2 mt-0.5">
                             <Badge variant="outline" className="text-xs">
-                              {result.points} pts
+                              {result.points} pkt
                             </Badge>
                           </div>
                         </div>
@@ -362,7 +362,7 @@ export function ChallengeView({ challenges, category, gender, isLoading = false 
               
               {!isLoadingResults && filteredResults.length === 0 && (
                 <div className="text-center py-8 text-muted-foreground">
-                  No results found for the selected filters.
+                  Keine Ergebnisse gefunden.
                 </div>
               )}
             </div>
