@@ -25,14 +25,14 @@ export function SignUpButton() {
       <DialogTrigger asChild>
         <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
           <UserPlus className="mr-2 h-4 w-4" />
-          <span className="hidden sm:inline">Sign up</span>
+          <span className="hidden sm:inline">Anmelden</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Sign up</DialogTitle>
+          <DialogTitle>Anmeldung</DialogTitle>
           <DialogDescription>
-            Log in to your STRAVA account to compete in our challenges.
+            Melde dich mit deinem Strava-Konto an, um an unserem Wettbewerb mitzumachen.
           </DialogDescription>
         </DialogHeader>
         <div className="flex flex-col items-center gap-6 py-6">
@@ -44,12 +44,12 @@ export function SignUpButton() {
           >
             {loading ? (
               <div className="w-full h-full bg-[#fc4c02] rounded-md flex items-center justify-center text-white font-medium">
-                Connecting...
+                Verbinde...
               </div>
             ) : (
               <img 
                 src="/btn_strava_connect_with_orange.svg" 
-                alt="Connect with STRAVA" 
+                alt="Mit STRAVA verbinden" 
                 className="w-full h-full hover:opacity-90 transition-opacity"
               />
             )}
