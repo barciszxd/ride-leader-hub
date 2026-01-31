@@ -22,29 +22,30 @@ Die Teilnahme ist vollständig freiwillig und erfordert eine aktive Verbindung I
 
 Wenn Sie Ihr STRAVA-Konto mit dieser Anwendung verbinden, werden folgende Daten von STRAVA abgerufen und in unserer Datenbank gespeichert:
 
-- **Vorname und Nachname**: Zur Anzeige in der Leaderboard und zur Identifikation
-- **Geschlecht**: Für die Klassifizierung und Auswertung der Leistungen
-- **Körpergewicht**: Für mögliche gewichtsbezogene Analysen und Vergleiche
-- **STRAVA-ID**: Zur eindeutigen Zuordnung des Kontos und zum Abruf Ihrer Aktivitäten
+-   **Vorname und Nachname**: Zur Anzeige in der Leaderboard und zur Identifikation
+-   **Geschlecht**: Für die Klassifizierung und Auswertung der Leistungen
+-   **Körpergewicht**: Für mögliche gewichtsbezogene Analysen und Vergleiche
+-   **STRAVA-ID**: Zur eindeutigen Zuordnung des Kontos und zum Abruf Ihrer Aktivitäten
 
 Das STRAVA-Profilbild wird nur Ihnen persönlich angezeigt und **nicht** in unserer Datenbank gespeichert. Es wird jeweils ad-hoc direkt von STRAVA abgerufen.
 
 ### 2.2 Aktivitäts- und Segment-Daten
 
-Wenn Sie während einer Aktivität auf STRAVA ein aktives Challenge-Segment (Berg- oder Sprintsegment) absolvieren, werden folgende Daten in unserer Datenbank gespeichert:
+Wenn Sie während einer Aktivität auf STRAVA ein aktives Herausforderung-Segment (Berg- oder Sprintsegment) absolvieren, werden folgende Daten in unserer Datenbank gespeichert:
 
-- **STRAVA-Activity-ID**: Die eindeutige Kennung der Aktivität
-- **STRAVA-Effort-ID**: Die eindeutige Kennung der Leistung
-- **STRAVA-Segment-ID**: Die eindeutige Kennung des absolvierten Segments
-- **Startzeitstempel**: Der exakte Zeitpunkt, zu dem Sie das Segment begonnen haben
-- **Durchschnittliche leistung (W)**: Die Leistung, die Sie während des Segments ausgebraucht haben (nur bei Verwendung eines Powermeters)
-- **Verstrichene Zeit**: Die Zeit, die Sie zur Absolvierung des Segments benötigt haben
-- **STRAVA-Benutzer-ID**: Zur Zuordnung der Leistung zu Ihrem Profil
+-   **STRAVA-Activity-ID**: Die eindeutige Kennung der Aktivität
+-   **STRAVA-Effort-ID**: Die eindeutige Kennung der Leistung
+-   **STRAVA-Segment-ID**: Die eindeutige Kennung des absolvierten Segments
+-   **Startzeitstempel**: Der exakte Zeitpunkt, zu dem Sie das Segment begonnen haben
+-   **Durchschnittliche leistung (W)**: Die Leistung, die Sie während des Segments ausgebraucht haben (nur bei Verwendung eines Powermeters)
+-   **Verstrichene Zeit**: Die Zeit, die Sie zur Absolvierung des Segments benötigt haben
+-   **STRAVA-Benutzer-ID**: Zur Zuordnung der Leistung zu Ihrem Profil
 
 Diese Daten werden nur erfasst, wenn:
-- Das Segment auf der Liste der aktiven Challenge-Segmente für den aktuellen Zeitraum eingetragen ist
-- Der Startzeitstempel innerhalb des definierten Challenge-Zeitraums liegt
-- Die Aktivität ebenfalls innerhalb dieses Zeitraums veröffentlicht wurde
+
+-   Das Segment auf der Liste der aktiven Herausforderungssegmente für den aktuellen Zeitraum eingetragen ist
+-   Der Startzeitstempel innerhalb des definierten Herausforderungszeitraums liegt
+-   Die Aktivität ebenfalls innerhalb dieses Zeitraums veröffentlicht wurde
 
 Alle weiteren Rohdaten zur Aktivität (z.B. genaue GPS-Tracks, detaillierte Telemetrie) werden **nicht** gespeichert.
 
@@ -62,8 +63,8 @@ Supabase implementiert Sicherheitsmaßnahmen zum Schutz Ihrer Daten vor Verlust,
 
 Ihre Daten werden **für unbegrenzte Zeit** in unserer Datenbank gespeichert, solange Sie:
 
-- Mitglied von CORA Coburger Radsport e.V. sind UND
-- Ihr STRAVA-Konto mit dieser Anwendung verbunden haben
+-   Mitglied von CORA Coburger Radsport e.V. sind UND
+-   Ihr STRAVA-Konto mit dieser Anwendung verbunden haben
 
 **Ausnahme und Löschung**: Sie können alle gespeicherten Daten jederzeit sofort und vollständig löschen, indem Sie die Verbindung zum STRAVA-Konto deauthorisieren (trennen). Die Deauthorisierung führt zur **unmittelbaren und vollständigen Löschung** aller Ihre Daten aus unserer Datenbank.
 
@@ -91,8 +92,8 @@ Sie haben zudem das Recht, sich bei einer Datenschutzbehörde zu beschweren.
 
 Wenn Sie die Verbindung Ihres STRAVA-Kontos mit dieser Anwendung deauthorisieren (trennen), werden **alle Ihre Daten sofort und vollständig gelöscht**. Dies umfasst:
 
-- Alle Profildaten (Name, Geschlecht, Gewicht)
-- Alle gespeicherten Segment-Leistungsdaten
-- Alle Referenzen zu Ihrem Konto
+-   Alle Profildaten (Name, Geschlecht, Gewicht)
+-   Alle gespeicherten Segment-Leistungsdaten
+-   Alle Referenzen zu Ihrem Konto
 
 Diese Löschung ist sofort wirksam. Es ist keine weitere Aktion oder Anfrage erforderlich.
