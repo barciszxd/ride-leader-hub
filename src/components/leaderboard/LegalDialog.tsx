@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import {
   Dialog,
   DialogContent,
@@ -67,6 +68,7 @@ export const LegalDialog = ({ title, markdownPath, open, onOpenChange }: LegalDi
           {!isLoading && !error && (
             <div className="prose prose-sm dark:prose-invert max-w-none">
               <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
                 components={{
                   h1: ({ children }) => <h1 className="text-xl font-bold mt-0 mb-4">{children}</h1>,
                   h2: ({ children }) => <h2 className="text-lg font-semibold mt-6 mb-3">{children}</h2>,
