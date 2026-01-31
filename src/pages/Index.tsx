@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
@@ -47,6 +47,12 @@ const Index = () => {
     path: '',
   });
   const { toast } = useToast();
+
+  // Standby dialog state for backend cold start
+  const [showStandbyDialog, setShowStandbyDialog] = useState(false);
+  const [standbyDialogState, setStandbyDialogState] = useState<'loading' | 'error'>('loading');
+  const standbyTimerRef = useRef<number | null>(null);
+  const errorTimerRef = useRef<number | null>(null);
 
   // Check for Strava callback on component mount
   useEffect(() => {
@@ -99,28 +105,73 @@ const Index = () => {
 
   // Load initial data
   useEffect(() => {
+    // Start 5-second timer to show standby dialog
+    standbyTimerRef.current = window.setTimeout(() => {
+      setShowStandbyDialog(true);
+      setStandbyDialogState('loading');
+    }, 5000);
+
+    // Start 90-second timer to show error state
+    errorTimerRef.current = window.setTimeout(() => {
+      setStandbyDialogState('error');
+    }, 90000);
+
     // Load challenges from API
     const loadData = async () => {
       try {
         setIsLoadingChallenges(true);
         setIsLoadingClassification(true);
         
-        const challengesData = await getChallenges();
+        // Run both API calls in parallel for better performance
+        const [challengesData, classificationData] = await Promise.all([
+          getChallenges(),
+          getClassification()
+        ]);
+        
+        // Update state with both results
         setChallenges(challengesData);
         setIsLoadingChallenges(false);
         
-        const classificationData = await getClassification();
         setClassification(classificationData);
         setIsLoadingClassification(false);
+
+        // Both API calls completed successfully - clear timers and close dialog
+        if (standbyTimerRef.current) {
+          clearTimeout(standbyTimerRef.current);
+          standbyTimerRef.current = null;
+        }
+        if (errorTimerRef.current) {
+          clearTimeout(errorTimerRef.current);
+          errorTimerRef.current = null;
+        }
+        setShowStandbyDialog(false);
       } catch (error) {
-        console.error('Failed to load challenges:', error);
+        console.error('Failed to load data:', error);
         setIsLoadingChallenges(false);
         setIsLoadingClassification(false);
-        // You might want to show an error message to the user here
+        // Clear timers on error as well
+        if (standbyTimerRef.current) {
+          clearTimeout(standbyTimerRef.current);
+          standbyTimerRef.current = null;
+        }
+        if (errorTimerRef.current) {
+          clearTimeout(errorTimerRef.current);
+          errorTimerRef.current = null;
+        }
       }
     };
     
     loadData();
+
+    // Cleanup function to clear timers on unmount
+    return () => {
+      if (standbyTimerRef.current) {
+        clearTimeout(standbyTimerRef.current);
+      }
+      if (errorTimerRef.current) {
+        clearTimeout(errorTimerRef.current);
+      }
+    };
   }, []);
 
   const activeChallenge = challenges.find(c => c.status === 'active');
@@ -171,6 +222,37 @@ const Index = () => {
                   {stravaMessage}
                 </p>
                 <Button onClick={handleStravaDialogClose} className="w-full">
+                  OK
+                </Button>
+              </>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Backend Standby Dialog */}
+      <Dialog open={showStandbyDialog} onOpenChange={setShowStandbyDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>
+              {standbyDialogState === 'loading' ? 'App wird gestartet' : 'App nicht verfügbar'}
+            </DialogTitle>
+          </DialogHeader>
+          <div className="flex flex-col items-center gap-6 py-6">
+            {standbyDialogState === 'loading' && (
+              <>
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                <p className="text-center text-sm text-muted-foreground">
+                  Anscheinend ist unser Server in den Standby-Modus gewechselt. Bitte warten Sie einen Moment, bis er wieder hochfährt (normalerweise bis zu 50 Sekunden).
+                </p>
+              </>
+            )}
+            {standbyDialogState === 'error' && (
+              <>
+                <p className="text-center text-sm text-muted-foreground">
+                  Anscheinend ist unser Server derzeit nicht verfügbar. Bitte versuchen Sie es später erneut.
+                </p>
+                <Button onClick={() => setShowStandbyDialog(false)} className="w-full">
                   OK
                 </Button>
               </>
