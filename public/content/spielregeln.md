@@ -49,6 +49,18 @@ Es gibt separate Wertungen für:
 -   Stellst du deine Aktivität auf _privat_ um, wird deine Zeit aus dem Leaderboard entfernt. Dies gilt auch für vergangene Herausforderungen! Wenn die Herausforderung in der Vergangenheit liegt, dann gibt es kein Zurück.
 -   Wir respektieren dein Recht auf Datenlöschung: trennst du unsere App von deinem STRAVA-Konto, löschen wir **alle** deine Zeiten. Dein Name verschwindet aus **allen** Wertungen. Es gibt kein Zurück.
 
+## Ehrensache: Fair Play
+
+Das CORA Leaderboard lebt von **Rum und Ehre**. Wir sind eine Verein, die auf gegenseitigem Respekt und sportlichem Verhalten basiert 🤝
+
+Deshalb gilt:
+
+-   ⛔ Kein Windschattenfahren hinter Fahrzeugen oder Kollegen
+-   ⛔ Keine E-Motor-Unterstützung oder andere mechanische Hilfsmittel
+-   ⛔ Keine Manipulationen
+
+Wir prüfen auffällige Zeiten und behalten uns vor, unfaire Einträge zu löschen. Bei wiederholten Verstößen kann ein Ausschluss erfolgen.
+
 ---
 
 Viel Spaß und gute Fahrt! 🚴‍♂️🚴‍♀️
