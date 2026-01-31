@@ -14,6 +14,7 @@ import { ClassificationView } from '@/components/leaderboard/ClassificationView'
 import { ChallengeView } from '@/components/leaderboard/ChallengeView';
 import { ChallengesOverview } from '@/components/leaderboard/ChallengesOverview';
 import { RidersOverview } from '@/components/leaderboard/RidersOverview';
+import { LegalDialog } from '@/components/leaderboard/LegalDialog';
 import { FilterToggle } from '@/components/leaderboard/FilterToggle';
 import { SignUpButton } from '@/components/leaderboard/JoinButton';
 import UserMenu from '@/components/leaderboard/UserMenu';
@@ -40,6 +41,11 @@ const Index = () => {
   const [stravaMessage, setStravaMessage] = useState('');
   const [showChallengesOverview, setShowChallengesOverview] = useState(false);
   const [showRidersOverview, setShowRidersOverview] = useState(false);
+  const [legalDialog, setLegalDialog] = useState<{ open: boolean; title: string; path: string }>({
+    open: false,
+    title: '',
+    path: '',
+  });
   const { toast } = useToast();
 
   // Check for Strava callback on component mount
@@ -239,7 +245,7 @@ const Index = () => {
               <div className="flex items-center gap-2 col-span-2 sm:col-span-2">
                 <Calendar className="w-4 h-4 text-primary" />
                 <span className="text-sm text-muted-foreground">
-                  Aktiv: <strong className="text-foreground">{activeChallenge.name}</strong>
+                  Aktiv: <strong className="text-foreground">{activeChallenge.sprint_segment.name}</strong>
                 </span>
                 <Badge variant="default" className="text-xs">
                   Live
@@ -309,11 +315,50 @@ const Index = () => {
         </div>
       </main>
 
+      {/* Legal Dialogs */}
+      <LegalDialog
+        title={legalDialog.title}
+        markdownPath={legalDialog.path}
+        open={legalDialog.open}
+        onOpenChange={(open) => setLegalDialog((prev) => ({ ...prev, open }))}
+      />
+
       {/* Footer */}
       <footer className="border-t bg-card mt-12">
         <div className="container mx-auto px-4 py-6">
-          <div className="text-center text-sm text-muted-foreground">
-            <p>© 2025 TEAM CORA - Coburger Radsport e.V.</p>
+          <div className="flex flex-col items-center gap-3">
+            <nav className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-sm">
+              <button
+                onClick={() => setLegalDialog({ open: true, title: 'Impressum', path: '/content/impressum.md' })}
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Impressum
+              </button>
+              <span className="text-muted-foreground/50">|</span>
+              <button
+                onClick={() => setLegalDialog({ open: true, title: 'Datenschutzerklärung', path: '/content/datenschutz.md' })}
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Datenschutzerklärung
+              </button>
+              <span className="text-muted-foreground/50">|</span>
+              <button
+                onClick={() => setLegalDialog({ open: true, title: 'Cookie Richtlinie', path: '/content/cookies.md' })}
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Cookie Richtlinie
+              </button>
+              <span className="text-muted-foreground/50">|</span>
+              <button
+                onClick={() => setLegalDialog({ open: true, title: 'Spielregeln', path: '/content/spielregeln.md' })}
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Spielregeln
+              </button>
+            </nav>
+            <p className="text-sm text-muted-foreground">
+              © 2025 TEAM CORA - Coburger Radsport e.V.
+            </p>
           </div>
         </div>
       </footer>
