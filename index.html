@@ -20,5 +20,14 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      /* Detect system preference and apply dark mode before React renders to prevent flash */
+      (function() {
+        const darkModePreference = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        if (darkModePreference === 'dark') {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
   </body>
 </html>
