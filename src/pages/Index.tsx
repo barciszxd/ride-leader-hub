@@ -230,6 +230,37 @@ const Index = () => {
         </DialogContent>
       </Dialog>
 
+      {/* Backend Standby Dialog */}
+      <Dialog open={showStandbyDialog} onOpenChange={setShowStandbyDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>
+              {standbyDialogState === 'loading' ? 'App wird gestartet' : 'App nicht verfügbar'}
+            </DialogTitle>
+          </DialogHeader>
+          <div className="flex flex-col items-center gap-6 py-6">
+            {standbyDialogState === 'loading' && (
+              <>
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                <p className="text-center text-sm text-muted-foreground">
+                  Anscheinend ist unser Server in den Standby-Modus gewechselt. Bitte warten Sie einen Moment, bis er wieder hochfährt (normalerweise bis zu 50 Sekunden).
+                </p>
+              </>
+            )}
+            {standbyDialogState === 'error' && (
+              <>
+                <p className="text-center text-sm text-muted-foreground">
+                  Anscheinend ist unser Server derzeit nicht verfügbar. Bitte versuchen Sie es später erneut.
+                </p>
+                <Button onClick={() => setShowStandbyDialog(false)} className="w-full">
+                  OK
+                </Button>
+              </>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
+
       {/* Challenges Overview Dialog */}
       <ChallengesOverview 
         challenges={challenges}
