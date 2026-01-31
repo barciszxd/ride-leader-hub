@@ -105,6 +105,17 @@ const Index = () => {
 
   // Load initial data
   useEffect(() => {
+    // Start 5-second timer to show standby dialog
+    standbyTimerRef.current = window.setTimeout(() => {
+      setShowStandbyDialog(true);
+      setStandbyDialogState('loading');
+    }, 5000);
+
+    // Start 90-second timer to show error state
+    errorTimerRef.current = window.setTimeout(() => {
+      setStandbyDialogState('error');
+    }, 90000);
+
     // Load challenges from API
     const loadData = async () => {
       try {
@@ -118,15 +129,44 @@ const Index = () => {
         const classificationData = await getClassification();
         setClassification(classificationData);
         setIsLoadingClassification(false);
+
+        // Both API calls completed successfully - clear timers and close dialog
+        if (standbyTimerRef.current) {
+          clearTimeout(standbyTimerRef.current);
+          standbyTimerRef.current = null;
+        }
+        if (errorTimerRef.current) {
+          clearTimeout(errorTimerRef.current);
+          errorTimerRef.current = null;
+        }
+        setShowStandbyDialog(false);
       } catch (error) {
         console.error('Failed to load challenges:', error);
         setIsLoadingChallenges(false);
         setIsLoadingClassification(false);
-        // You might want to show an error message to the user here
+        // Clear timers on error as well
+        if (standbyTimerRef.current) {
+          clearTimeout(standbyTimerRef.current);
+          standbyTimerRef.current = null;
+        }
+        if (errorTimerRef.current) {
+          clearTimeout(errorTimerRef.current);
+          errorTimerRef.current = null;
+        }
       }
     };
     
     loadData();
+
+    // Cleanup function to clear timers on unmount
+    return () => {
+      if (standbyTimerRef.current) {
+        clearTimeout(standbyTimerRef.current);
+      }
+      if (errorTimerRef.current) {
+        clearTimeout(errorTimerRef.current);
+      }
+    };
   }, []);
 
   const activeChallenge = challenges.find(c => c.status === 'active');
