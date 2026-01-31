@@ -22,9 +22,10 @@ export const LegalDialog = ({ title, markdownPath, open, onOpenChange }: LegalDi
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (open && !content) {
+    if (open) {
       setIsLoading(true);
       setError(null);
+      setContent('');
       
       fetch(markdownPath)
         .then((response) => {
@@ -42,8 +43,11 @@ export const LegalDialog = ({ title, markdownPath, open, onOpenChange }: LegalDi
           setIsLoading(false);
           console.error('Failed to load markdown:', err);
         });
+    } else {
+      // Reset content when dialog closes
+      setContent('');
     }
-  }, [open, markdownPath, content]);
+  }, [open, markdownPath]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
