@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
@@ -47,6 +47,12 @@ const Index = () => {
     path: '',
   });
   const { toast } = useToast();
+
+  // Standby dialog state for backend cold start
+  const [showStandbyDialog, setShowStandbyDialog] = useState(false);
+  const [standbyDialogState, setStandbyDialogState] = useState<'loading' | 'error'>('loading');
+  const standbyTimerRef = useRef<number | null>(null);
+  const errorTimerRef = useRef<number | null>(null);
 
   // Check for Strava callback on component mount
   useEffect(() => {
