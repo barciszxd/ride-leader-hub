@@ -53,9 +53,6 @@ export const LegalDialog = ({ title, markdownPath, open, onOpenChange }: LegalDi
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-2xl max-h-[80vh]">
-        <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-        </DialogHeader>
         <ScrollArea className="h-[60vh] pr-4">
           {isLoading && (
             <div className="flex items-center justify-center py-8">
