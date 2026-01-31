@@ -122,11 +122,16 @@ const Index = () => {
         setIsLoadingChallenges(true);
         setIsLoadingClassification(true);
         
-        const challengesData = await getChallenges();
+        // Run both API calls in parallel for better performance
+        const [challengesData, classificationData] = await Promise.all([
+          getChallenges(),
+          getClassification()
+        ]);
+        
+        // Update state with both results
         setChallenges(challengesData);
         setIsLoadingChallenges(false);
         
-        const classificationData = await getClassification();
         setClassification(classificationData);
         setIsLoadingClassification(false);
 
@@ -141,7 +146,7 @@ const Index = () => {
         }
         setShowStandbyDialog(false);
       } catch (error) {
-        console.error('Failed to load challenges:', error);
+        console.error('Failed to load data:', error);
         setIsLoadingChallenges(false);
         setIsLoadingClassification(false);
         // Clear timers on error as well
