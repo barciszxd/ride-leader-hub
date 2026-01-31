@@ -78,8 +78,9 @@ All colors MUST be HSL.
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    /* Keep orange primary color for dark mode with lighter shade for visibility */
+    --primary: 24 100% 65%;
+    --primary-foreground: 240 10% 3.9%;
 
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
@@ -104,6 +105,17 @@ All colors MUST be HSL.
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Dark mode variants for cycling-specific colors */
+    --sprint: 45 100% 65%;
+    --sprint-foreground: 0 0% 0%;
+    --climb: 142 100% 50%;
+    --climb-foreground: 0 0% 0%;
+    
+    /* Dark mode performance colors */
+    --gold: 45 100% 65%;
+    --silver: 0 0% 85%;
+    --bronze: 30 100% 65%;
   }
 }
 
