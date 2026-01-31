@@ -3,34 +3,35 @@
 ## Angaben gemäß § 5 TMG
 
 **TEAM CORA - Coburger Radsport e.V.**  
-Musterstraße 123  
+Raststraße 11a  
 96450 Coburg  
-Deutschland
+Deutschland  
 
 ## Vertreten durch
 
-Max Mustermann (1. Vorsitzender)  
-Erika Musterfrau (2. Vorsitzende)
-
-## Kontakt
-
-Telefon: +49 (0) 9561 123456  
-E-Mail: info@team-cora.de
+1.Vorsitzender:  
+Michael Beck  
+Rosenauer Strasse 29  
+96487 Dörfles-Esbach  
+vorstand [ät] coburger-radsport.de
 
 ## Registereintrag
 
-Eingetragen im Vereinsregister.  
-Registergericht: Amtsgericht Coburg  
-Registernummer: VR 12345
+Eintragung im Vereinsregister.
+Registergericht: Vereinsregister beim Amtsgericht Coburg
+Registernummer: VR 200588
 
-## Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV
 
-Max Mustermann  
-Musterstraße 123  
-96450 Coburg
+## Bankverbindung
 
----
+**IBAN**: DE90 7835 0000 0040 9378 80  
+**BIC**: BYLADEM1COB  
+Sparkasse Coburg-Lichtenfels
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+## Hinweis auf EU-Streitschlichtung
 
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit:  
+[ec.europa.eu/consumers/odr](http://ec.europa.eu/consumers/odr)  
+Unsere E-Mail-Adresse finden sie oben im Impressum.
+
+Quelle: [www.e-recht24.de](https://www.e-recht24.de)
