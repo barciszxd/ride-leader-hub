@@ -270,9 +270,9 @@ export function ChallengeView({ challenges, category, gender, isLoading = false 
                     {(category === 'sprint' ? selectedChallenge.sprint_segment.name : selectedChallenge.climb_segment.name) || 'Unnamed Segment'}
                     <ExternalLink className="w-4 h-4" />
                   </a>
-                  <SegmentBadge segment={category === 'sprint' ? selectedChallenge.sprint_segment : selectedChallenge.climb_segment} />
                 </CardTitle>
                 <div className="flex items-center gap-4 mt-2 text-sm text-muted-foreground">
+                  <SegmentBadge segment={category === 'sprint' ? selectedChallenge.sprint_segment : selectedChallenge.climb_segment} />
                   <div className="flex items-center gap-1">
                     <Ruler className="w-4 h-4" />
                     {((category === 'sprint' ? selectedChallenge.sprint_segment.distance : selectedChallenge.climb_segment.distance) / 1000).toFixed(2)}km
