@@ -38,7 +38,8 @@ export function ClassificationView({ data, category, gender, isLoading = false }
       if (category === 'sprint') {
         return 'bg-green-400/5 border-green-500';
       } else {
-        return 'bg-[url("/PolkaDot.jpg")] bg-[length:10rem_10rem] border-red-500';
+        // Polka dot pattern for Bergwertung leader - uses dark variant in dark mode
+        return 'bg-[url("/PolkaDot.jpg")] dark:bg-[url("/PolkaDot_dark.jpg")] bg-[length:10rem_10rem] border-red-500';
       }
     }
     return '';
