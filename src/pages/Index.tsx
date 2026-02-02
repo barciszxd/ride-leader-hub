@@ -318,8 +318,8 @@ const Index = () => {
               className="flex items-center gap-2 cursor-pointer hover:opacity-80" 
               onClick={() => setShowChallengesOverview(true)}
             >
-              <Target className="w-4 h-4 text-primary" />
-              <span className="text-sm text-muted-foreground">
+              <Target className="w-4 h-4 text-primary flex-shrink-0" />
+              <span className="text-sm text-muted-foreground truncate">
                 <strong className="text-foreground">{challenges.length}</strong> Herausforderungen
               </span>
             </div>
