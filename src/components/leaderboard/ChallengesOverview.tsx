@@ -25,7 +25,8 @@ export const ChallengesOverview = ({ challenges, open, onOpenChange }: Challenge
         <div className="overflow-auto max-h-[calc(80vh-8rem)]">
           <table className="w-full">
             <thead>
-              <tr className="border-b">
+              {/* Sticky header row remains visible during vertical scroll */}
+              <tr className="border-b sticky top-0 bg-background z-20">
                 <th className="text-left py-2 px-4 font-medium" style={{ width: '200px' }}>
                   <div className="flex items-center gap-2">
                     <Calendar className="w-4 h-4" />
