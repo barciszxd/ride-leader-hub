@@ -27,7 +27,8 @@ export const ChallengesOverview = ({ challenges, open, onOpenChange }: Challenge
             <thead>
               {/* Sticky header row remains visible during vertical scroll */}
               <tr className="border-b sticky top-0 bg-background z-20">
-                <th className="text-left py-2 px-4 font-medium" style={{ width: '200px' }}>
+                {/* Sticky date column remains visible during horizontal scroll */}
+                <th className="text-left py-2 px-4 font-medium sticky left-0 bg-background z-10" style={{ width: '200px' }}>
                   <div className="flex items-center gap-2">
                     <Calendar className="w-4 h-4" />
                     <span>Datum</span>
@@ -50,7 +51,8 @@ export const ChallengesOverview = ({ challenges, open, onOpenChange }: Challenge
             <tbody>
               {challenges.map((challenge) => (
                 <tr key={challenge.id} className="border-b">
-                  <td className="py-2 px-4">
+                  {/* Sticky date cell remains visible during horizontal scroll */}
+                  <td className="py-2 px-4 sticky left-0 bg-background z-10">
                     {new Date(challenge.start_date).toLocaleDateString('de-DE', { 
                       day: 'numeric', 
                       month: '2-digit'
