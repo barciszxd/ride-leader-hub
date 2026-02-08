@@ -21,7 +21,8 @@ export const ChallengesOverview = ({ challenges, open, onOpenChange }: Challenge
         <DialogHeader>
           <DialogTitle>Herausforderungen</DialogTitle>
         </DialogHeader>
-        <div className="space-y-4">
+        {/* Scroll container allows overflow while keeping table within dialog bounds */}
+        <div className="overflow-auto max-h-[calc(80vh-8rem)]">
           <table className="w-full">
             <thead>
               <tr className="border-b">
