@@ -27,8 +27,8 @@ export const ChallengesOverview = ({ challenges, open, onOpenChange }: Challenge
             <thead>
               {/* Sticky header row remains visible during vertical scroll */}
               <tr className="border-b sticky top-0 bg-background z-20">
-                {/* Sticky date column remains visible during horizontal scroll */}
-                <th className="text-left py-2 px-4 font-medium sticky left-0 bg-background z-10" style={{ width: '200px' }}>
+                {/* Sticky date column header at intersection - highest z-index for proper layering */}
+                <th className="text-left py-2 px-4 font-medium sticky left-0 bg-background z-30" style={{ width: '200px' }}>
                   <div className="flex items-center gap-2">
                     <Calendar className="w-4 h-4" />
                     <span>Datum</span>
