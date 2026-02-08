@@ -16,7 +16,8 @@ interface ChallengesOverviewProps {
 export const ChallengesOverview = ({ challenges, open, onOpenChange }: ChallengesOverviewProps) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-3xl">
+      {/* Viewport height constraint ensures dialog fits on small screens */}
+      <DialogContent className="sm:max-w-3xl max-h-[80vh]">
         <DialogHeader>
           <DialogTitle>Herausforderungen</DialogTitle>
         </DialogHeader>
