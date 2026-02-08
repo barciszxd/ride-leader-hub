@@ -18,8 +18,8 @@ import { LegalDialog } from '@/components/leaderboard/LegalDialog';
 import { FilterToggle } from '@/components/leaderboard/FilterToggle';
 import { SignUpButton } from '@/components/leaderboard/JoinButton';
 import UserMenu from '@/components/leaderboard/UserMenu';
-import { Challenge, Classification, ViewType, FilterCategory, FilterGender } from '@/types/leaderboard';
-import { getChallenges, getClassification } from '@/lib/mockData';
+import { Challenge, Classification, Athlete, ViewType, FilterCategory, FilterGender } from '@/types/leaderboard';
+import { getChallenges, getClassification, getAthletes } from '@/lib/api';
 import { api } from '@/lib/api';
 import { useToast } from '@/hooks/use-toast';
 import { Trophy, Target, Calendar, Users, Loader2, Zap, Mountain } from 'lucide-react';
@@ -32,8 +32,10 @@ const Index = () => {
   const [gender, setGender] = useState<FilterGender>('M');
   const [challenges, setChallenges] = useState<Challenge[]>([]);
   const [classification, setClassification] = useState<Classification[]>([]);
+  const [athletes, setAthletes] = useState<Athlete[]>([]);
   const [isLoadingClassification, setIsLoadingClassification] = useState(true);
   const [isLoadingChallenges, setIsLoadingChallenges] = useState(true);
+  const [isLoadingAthletes, setIsLoadingAthletes] = useState(true);
   
   // Strava callback handling
   const [showStravaDialog, setShowStravaDialog] = useState(false);
@@ -119,23 +121,26 @@ const Index = () => {
     // Load challenges from API
     const loadData = async () => {
       try {
-        setIsLoadingChallenges(true);
-        setIsLoadingClassification(true);
+        setIsLoadingAthletes(true);
         
-        // Run both API calls in parallel for better performance
-        const [challengesData, classificationData] = await Promise.all([
+        // Run all three API calls in parallel for better performance
+        const [challengesData, classificationData, athletesData] = await Promise.all([
           getChallenges(),
-          getClassification()
+          getClassification(),
+          getAthletes()
         ]);
         
-        // Update state with both results
+        // Update state with all results
         setChallenges(challengesData);
         setIsLoadingChallenges(false);
         
         setClassification(classificationData);
         setIsLoadingClassification(false);
 
-        // Both API calls completed successfully - clear timers and close dialog
+        setAthletes(athletesData);
+        setIsLoadingAthletes(false);
+
+        // All API calls completed successfully - clear timers and close dialog
         if (standbyTimerRef.current) {
           clearTimeout(standbyTimerRef.current);
           standbyTimerRef.current = null;
@@ -149,6 +154,7 @@ const Index = () => {
         console.error('Failed to load data:', error);
         setIsLoadingChallenges(false);
         setIsLoadingClassification(false);
+        setIsLoadingAthletes(false);
         // Clear timers on error as well
         if (standbyTimerRef.current) {
           clearTimeout(standbyTimerRef.current);
@@ -175,7 +181,7 @@ const Index = () => {
   }, []);
 
   const activeChallenge = challenges.find(c => c.status === 'active');
-  const totalRiders = classification.length;
+  const totalRiders = athletes.length;
 
   const handleStravaDialogClose = () => {
     setShowStravaDialog(false);
@@ -269,7 +275,7 @@ const Index = () => {
       />
 
       <RidersOverview
-        athletes={classification.map(c => ({ id: c.athlete_id, name: c.athlete_name, gender: c.gender }))}
+        athletes={athletes}
         open={showRidersOverview}
         onOpenChange={setShowRidersOverview}
       />

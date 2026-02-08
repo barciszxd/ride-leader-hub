@@ -1,5 +1,5 @@
 export interface Athlete {
-  id: string;
+  id: number;
   name: string;
   gender: 'M' | 'F';
 }

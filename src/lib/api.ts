@@ -74,3 +74,24 @@ class LeaderboardAPI {
 }
 
 export const api = new LeaderboardAPI();
+
+// Export convenience functions for cleaner imports
+export const getChallenges = async (): Promise<Challenge[]> => {
+  return await api.getChallenges();
+};
+
+export const getClassification = async (gender?: 'M' | 'F'): Promise<Classification[]> => {
+  return await api.getClassification(gender);
+};
+
+export const getAthletes = async (): Promise<Athlete[]> => {
+  return await api.getAthletes();
+};
+
+export const getChallengeResults = async (
+  challengeId: string,
+  segmentType?: 'sprint' | 'climb',
+  gender?: 'M' | 'F'
+): Promise<Result[]> => {
+  return await api.getChallengeResults(challengeId, segmentType, gender);
+};

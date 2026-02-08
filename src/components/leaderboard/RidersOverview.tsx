@@ -17,14 +17,17 @@ interface RidersOverviewProps {
 export const RidersOverview = ({ athletes, open, onOpenChange }: RidersOverviewProps) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-2xl">
+      {/* Viewport height constraint ensures dialog fits on small screens */}
+      <DialogContent className="sm:max-w-2xl max-h-[80vh]">
         <DialogHeader>
           <DialogTitle>Fahrer</DialogTitle>
         </DialogHeader>
-        <div className="space-y-4">
+        {/* Scroll container allows overflow while keeping table within dialog bounds */}
+        <div className="overflow-auto max-h-[calc(80vh-8rem)]">
           <table className="w-full">
             <thead>
-              <tr className="border-b">
+              {/* Sticky header row remains visible during vertical scroll */}
+              <tr className="border-b sticky top-0 bg-background z-20">
                 <th className="text-left py-2 px-4 font-medium">
                   <div className="flex items-center gap-2">
                     <User className="w-4 h-4" />
