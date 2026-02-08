@@ -237,8 +237,8 @@ const Index = () => {
       </Dialog>
 
       {/* Backend Standby Dialog */}
-      <Dialog open={showStandbyDialog} onOpenChange={setShowStandbyDialog}>
-        <DialogContent className="sm:max-w-md">
+      <Dialog open={showStandbyDialog} onOpenChange={standbyDialogState === 'error' ? setShowStandbyDialog : undefined}>
+        <DialogContent className={`sm:max-w-md ${standbyDialogState === 'loading' ? '[&>button]:hidden' : ''}`}>
           <DialogHeader>
             <DialogTitle>
               {standbyDialogState === 'loading' ? 'App wird gestartet' : 'App nicht verfügbar'}
