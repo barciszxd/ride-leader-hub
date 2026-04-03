@@ -88,6 +88,37 @@ class LeaderboardAPI {
   logout(): void {
     document.cookie = 'profile_medium=; max-age=0; path=/';
   }
+
+  /**
+   * Permanently sign the authenticated athlete out of the leaderboard by
+   * calling DELETE /me on the backend.
+   *
+   * @param hard - When true, the athlete's record and all efforts are deleted
+   *   (hard sign-out).  When false (default), only the stored Strava
+   *   credentials are revoked while historical data is preserved.
+   *
+   * Clears the client-side profile cookie regardless of the mode so that the
+   * browser reflects the logged-out state after the page reloads.
+   */
+  async signOut(hard: boolean): Promise<{ success: boolean; message: string }> {
+    const url = `${API_BASE_URL}/me${hard ? '?hard=true' : ''}`;
+    const response = await fetch(url, {
+      method:      'DELETE',
+      credentials: 'include',
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data?.error ?? `Sign-out failed: ${response.status}`);
+    }
+
+    // Clear the client-visible profile cookie so the UI switches back to the
+    // logged-out state when the page reloads.
+    document.cookie = 'profile_medium=; max-age=0; path=/';
+
+    return data;
+  }
 }
 
 export const api = new LeaderboardAPI();

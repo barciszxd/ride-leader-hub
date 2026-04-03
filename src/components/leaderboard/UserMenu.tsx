@@ -3,9 +3,11 @@ import React, { useState } from 'react';
 interface UserMenuProps {
   profileMediumUrl: string;
   onLogout: () => void;
+  /** Opens the "Leaderboard verlassen" dialog managed by the parent. */
+  onSignOut: () => void;
 }
 
-const UserMenu: React.FC<UserMenuProps> = ({ profileMediumUrl, onLogout }) => {
+const UserMenu: React.FC<UserMenuProps> = ({ profileMediumUrl, onLogout, onSignOut }) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -51,6 +53,29 @@ const UserMenu: React.FC<UserMenuProps> = ({ profileMediumUrl, onLogout }) => {
             onClick={onLogout}
           >
             Ausloggen
+          </button>
+
+          {/* Divider */}
+          <hr style={{ margin: '4px 12px', borderColor: '#eee' }} />
+
+          {/* Permanent sign-out with data-retention choice */}
+          <button
+            style={{
+              width: '100%',
+              background: 'none',
+              border: 'none',
+              padding: '8px 16px',
+              textAlign: 'left',
+              cursor: 'pointer',
+              fontSize: '1rem',
+              color: '#c0392b',
+            }}
+            onClick={() => {
+              setMenuOpen(false);
+              onSignOut();
+            }}
+          >
+            Leaderboard verlassen
           </button>
         </div>
       )}

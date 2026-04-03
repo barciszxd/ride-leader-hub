@@ -18,6 +18,7 @@ import { LegalDialog } from '@/components/leaderboard/LegalDialog';
 import { FilterToggle } from '@/components/leaderboard/FilterToggle';
 import { SignUpButton } from '@/components/leaderboard/JoinButton';
 import UserMenu from '@/components/leaderboard/UserMenu';
+import { SignOutDialog } from '@/components/leaderboard/SignOutDialog';
 import { Challenge, Classification, Athlete, ViewType, FilterCategory, FilterGender } from '@/types/leaderboard';
 import { getChallenges, getClassification, getAthletes } from '@/lib/api';
 import { api } from '@/lib/api';
@@ -202,6 +203,25 @@ const Index = () => {
     window.location.reload();
   };
 
+  const [showSignOutDialog, setShowSignOutDialog] = useState(false);
+
+  const handleSignOutSuccess = () => {
+    toast({
+      title:       'Tschüss!',
+      description: 'Du hast das Leaderboard verlassen.',
+    });
+    // Give the toast a moment to appear before reloading
+    setTimeout(() => window.location.reload(), 2000);
+  };
+
+  const handleSignOutError = (message: string) => {
+    toast({
+      title:       'Fehler beim Verlassen',
+      description: message,
+      variant:     'destructive',
+    });
+  };
+
   return (
     <>
       {/* Strava Authorization Dialog */}
@@ -280,6 +300,14 @@ const Index = () => {
         onOpenChange={setShowRidersOverview}
       />
 
+      {/* Sign-out dialog: lets the athlete choose between soft and hard sign-out */}
+      <SignOutDialog
+        open={showSignOutDialog}
+        onOpenChange={setShowSignOutDialog}
+        onSuccess={handleSignOutSuccess}
+        onError={handleSignOutError}
+      />
+
       <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="border-b bg-card">
@@ -300,7 +328,11 @@ const Index = () => {
               {!profileMediumCookie ? (
                 <SignUpButton />
               ) : (
-                <UserMenu profileMediumUrl={decodeURIComponent(profileMediumCookie)} onLogout={handleLogout} />
+                <UserMenu
+                  profileMediumUrl={decodeURIComponent(profileMediumCookie)}
+                  onLogout={handleLogout}
+                  onSignOut={() => setShowSignOutDialog(true)}
+                />
               )}
             </div>
           </div>
