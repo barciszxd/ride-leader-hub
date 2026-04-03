@@ -6,7 +6,11 @@ const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://cora-leaderboard.o
 class LeaderboardAPI {
   private async request<T>(endpoint: string): Promise<T> {
     try {
-      const response = await fetch(`${API_BASE_URL}${endpoint}`);
+      // credentials: 'include' sends the HTTP-only auth_session cookie with
+      // every request, even when the frontend and backend are on different origins.
+      const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+        credentials: 'include',
+      });
       if (!response.ok) {
         throw new Error(`API Error: ${response.status}`);
       }
@@ -63,13 +67,26 @@ class LeaderboardAPI {
     params.append('code', code);
     params.append('scope', scope);
     
-    const response = await fetch(`${API_BASE_URL}/exchange_token?${params.toString()}`);
+    // credentials: 'include' is required so the browser stores the HTTP-only
+    // auth_session cookie that the backend sets in this response.
+    const response = await fetch(`${API_BASE_URL}/exchange_token?${params.toString()}`, {
+      credentials: 'include',
+    });
     
     if (!response.ok) {
       throw new Error(`Token exchange failed: ${response.status}`);
     }
 
     return await response.json();
+  }
+
+  // Clear all session cookies so the user is considered logged out.
+  // The HTTP-only auth_session cookie cannot be deleted by JavaScript, so
+  // logout is handled solely by clearing the client-visible profile_medium
+  // cookie and reloading.  The auth_session cookie will naturally expire
+  // after its max-age (1 day) or can be removed by a future /logout route.
+  logout(): void {
+    document.cookie = 'profile_medium=; max-age=0; path=/';
   }
 }
 

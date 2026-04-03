@@ -75,10 +75,10 @@ const Index = () => {
           if (response.success) {
             setStravaDialogState('success');
             const firstName = response.athlete?.firstname || 'there';
-            // Save profile_medium in a cookie for 7 days
+            // Save profile_medium in a cookie for 1 day (matches auth_session expiry)
             const profileMedium = response.athlete?.profile_medium;
             if (profileMedium) {
-              const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toUTCString();
+              const expires = new Date(Date.now() + 24 * 60 * 60 * 1000).toUTCString();
               document.cookie = `profile_medium=${encodeURIComponent(profileMedium)}; expires=${expires}; path=/`;
             }
             if (response.athlete_created) {
@@ -198,7 +198,7 @@ const Index = () => {
   const profileMediumCookie = getCookie('profile_medium');
 
   const handleLogout = () => {
-    document.cookie = 'profile_medium=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    api.logout();
     window.location.reload();
   };
 
