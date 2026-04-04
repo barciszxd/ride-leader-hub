@@ -6,6 +6,9 @@ __pycache__/
 # C extensions
 *.so
 
+# Python virtual environments
+*.venv/
+
 # Distribution / packaging
 .Python
 build/
@@ -93,3 +96,6 @@ dist-ssr
 *.sln
 *.sw?
 *.github
+
+# Vercel
+*.vercel
