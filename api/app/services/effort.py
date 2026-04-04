@@ -3,7 +3,7 @@ from datetime import datetime
 
 import requests
 
-from app.database import get_db_session, retry_db_operation
+from app.database import get_db_session
 from app.helpers import TimeSpan
 from app.models.challenge import Challenge
 from app.models.effort import Effort
@@ -66,24 +66,20 @@ class EffortRepository:
 
         return effort_saved
 
-    @retry_db_operation(max_retries=3, delay=1)
     def delete_efforts_by_activity_id(self, activity_id: int) -> int:
         """Remove all effort records related with given activity ID."""
         deleted_count = self.session.query(Effort).filter_by(activity_id=activity_id).delete()
         return deleted_count
 
-    @retry_db_operation(max_retries=3, delay=1)
     def delete_efforts_by_athlete_id(self, athlete_id: int) -> int:
         """Remove all effort records related with given athlete ID."""
         deleted_count = self.session.query(Effort).filter_by(athlete_id=athlete_id).delete()
         return deleted_count
 
-    @retry_db_operation(max_retries=3, delay=1)
     def get_efforts_by_activity_id(self, activity_id: int) -> list[Effort]:
         """Retrieve all efforts related to a specific activity ID."""
         return self.session.query(Effort).filter_by(activity_id=activity_id).all()
 
-    @retry_db_operation(max_retries=3, delay=1)
     def get_efforts_by_segment_id_and_date(self, segment_id: int, start_date: datetime, end_date: datetime) -> list[Effort]:
         """Retrieve all efforts for a specific segment within a date range."""
         return self.session.query(Effort).filter(
@@ -92,7 +88,6 @@ class EffortRepository:
             Effort.start_date <= end_date
         ).all()
 
-    @retry_db_operation(max_retries=3, delay=1)
     def _save_effort(self, data: dict) -> None:
         """Save a single effort record to the database."""
 

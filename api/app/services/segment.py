@@ -1,6 +1,6 @@
 import requests
 
-from app.database import get_db_session, retry_db_operation
+from app.database import get_db_session
 from app.models.challenge import Challenge
 from app.models.segment import Segment
 from app.services.athlete import AthleteRepository
@@ -32,7 +32,6 @@ class SegmentRepository:
 
         return self._save_segment(segment_data)
 
-    @retry_db_operation(max_retries=3, delay=1)
     def get_by_id(self, segment_id: int) -> Segment | None:
         """Get segment by ID."""
         return self.session.query(Segment).filter_by(id=segment_id).first()
@@ -62,7 +61,6 @@ class SegmentRepository:
 
         return response.json()
 
-    @retry_db_operation(max_retries=3, delay=1)
     def _save_segment(self, segment_data: dict) -> Segment:
         """Save segment data to the database."""
 

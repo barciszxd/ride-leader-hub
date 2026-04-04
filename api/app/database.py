@@ -1,35 +1,27 @@
 """Database connection and session management for Flask application"""
-import atexit
 import functools
 import logging
-import time
 
 from config import config
 from flask import g
 from sqlalchemy import create_engine
 from sqlalchemy.exc import DisconnectionError, OperationalError, SQLAlchemyError
 from sqlalchemy.orm import Session, sessionmaker
-from sqlalchemy.pool import QueuePool
+from sqlalchemy.pool import NullPool
 
 logger = logging.getLogger(__name__)
 
-# Create database engine with more robust connection settings
+_db_initialized = False
+
+# NullPool: No connection pooling per instance (for ephemeral functions)
 engine = create_engine(
     config.DATABASE_URL,
-    echo          = False,
-    poolclass     = QueuePool,
-    pool_size     = 5,
-    max_overflow  = 10,
-    pool_pre_ping = True,
-    pool_recycle  = 1800,
-    pool_timeout  = 30,
-    connect_args  = {
-        "connect_timeout": 30,
+    echo=False,
+    poolclass=NullPool,
+    connect_args={
+        "connect_timeout": 5,
         "application_name": "cora_leaderboard",
-        "options": "-c statement_timeout=30000",
-        "keepalives_idle": "600",
-        "keepalives_interval": "30",
-        "keepalives_count": "3"
+        "options": "-c statement_timeout=10000",
     }
 )
 
@@ -60,53 +52,30 @@ def close_db_session(error=None) -> None:
             session.close()
 
 
-def cleanup_db_connections():
-    """Close all database connections when the application shuts down"""
-    try:
-        engine.dispose()
-        logger.info("Database connections closed successfully")
-    except Exception as e:
-        logger.error("Error closing database connections: %s", e)
-
-
-atexit.register(cleanup_db_connections)
-
-
-def retry_db_operation(max_retries=3, delay=1):
-    """Decorator to retry database operations on connection failures"""
-    def decorator(func):
-        @functools.wraps(func)
-        def wrapper(*args, **kwargs):
-            for attempt in range(max_retries):
-                try:
-                    return func(*args, **kwargs)
-                except (OperationalError, DisconnectionError) as e:
-                    if attempt == max_retries - 1:
-                        logger.error("Database operation failed after %d attempts: %s", max_retries, e)
-                        raise
-                    logger.warning("Database operation failed (attempt %d/%d): %s", attempt + 1, max_retries, e)
-                    time.sleep(delay * (2 ** attempt))  # Exponential backoff
-                except Exception as e:
-                    logger.error("Non-recoverable database error: %s", e)
-                    raise
-            return None
-        return wrapper
-    return decorator
-
-
-@retry_db_operation(max_retries=3, delay=2)
 def init_db():
-    """Initialize database tables with retry logic"""
+    """Initialize database tables on startup (called only once)"""
+    global _db_initialized
+
+    if _db_initialized:
+        logger.debug("Database already initialized, skipping")
+        return
     try:
+
         from app.models import Base
         from app.models.athlete import Athlete
         from app.models.challenge import Challenge
         from app.models.effort import Effort
         from app.models.segment import Segment
 
-        logger.info("Attempting to create database tables...")
+        logger.info("Initializing database tables...")
         Base.metadata.create_all(bind=engine)
-        logger.info("Database tables created successfully")
+        _db_initialized = True
+        logger.info("Database tables initialized successfully")
+
+    except (OperationalError, DisconnectionError) as e:
+        logger.error("Database operation failed: %s", e)
+        raise
+
     except Exception as e:
-        logger.error("Failed to initialize database: %s", e)
+        logger.error("Non-recoverable database error: %s", e)
         raise

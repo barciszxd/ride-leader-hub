@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 
 import requests
 
-from app.database import get_db_session, retry_db_operation
+from app.database import get_db_session
 from app.models.athlete import Athlete
 from app.services.utilities import decrypt_token, encrypt_token
 from config import config
@@ -41,7 +41,6 @@ class AthleteRepository:
 
         return athlete
 
-    @retry_db_operation(max_retries=3, delay=1)
     def revoke_tokens(self, athlete_id: int) -> bool:
         """Nullify the Strava tokens for an athlete without deleting the record.
 
@@ -63,7 +62,6 @@ class AthleteRepository:
         athlete.expires_at    = 0
         return True
 
-    @retry_db_operation(max_retries=3, delay=1)
     def delete_by_id(self, athlete_id: int) -> bool:
         """Delete athlete by ID."""
         deleted_count = self.session.query(Athlete).filter_by(id=athlete_id).delete()
@@ -81,12 +79,10 @@ class AthleteRepository:
 
         return athlete
 
-    @retry_db_operation(max_retries=3, delay=1)
     def get_by_id(self, athlete_id: int) -> Athlete | None:
         """Get athlete by ID."""
         return self.session.query(Athlete).filter_by(id=athlete_id).first()
 
-    @retry_db_operation(max_retries=3, delay=1)
     def get_all(self) -> list[Athlete]:
         """Get all athletes."""
         return self.session.query(Athlete).all()
@@ -133,7 +129,6 @@ class AthleteRepository:
 
         return decrypt_token(athlete.access_token)  # type: ignore
 
-    @retry_db_operation(max_retries=3, delay=1)
     def _save_athlete(self, athlete_data: dict, token_data: dict):
         athlete = Athlete(
             id            = athlete_data['id'],

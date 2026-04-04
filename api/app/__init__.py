@@ -24,9 +24,6 @@ def create_app():
             "details": str(error)
         }), 503
 
-    # Initialize database tables
-    init_db()
-
     # Load configuration
     flask_app.config.from_object(config)
 
@@ -46,6 +43,11 @@ def create_app():
 
 
 app = create_app()
+
+# Initialize database tables only once at startup (not on every request)
+init_db()
+
+# Register session cleanup for each request
 app.teardown_appcontext(close_db_session)
 
 if __name__ == '__main__':

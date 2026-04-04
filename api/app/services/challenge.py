@@ -1,7 +1,7 @@
 """Challenge Repository Module"""
 from datetime import datetime, timedelta, timezone
 
-from app.database import get_db_session, retry_db_operation
+from app.database import get_db_session
 from app.models.challenge import Challenge
 from app.services.segment import SegmentRepository
 
@@ -12,7 +12,6 @@ class ChallengeRepository:
     def __init__(self):
         self.session = get_db_session()
 
-    @retry_db_operation(max_retries=3, delay=1)
     def add(self, challenge_data: dict) -> Challenge | None:
         """Add a new challenge."""
         climb_segment_id  = challenge_data.get('climb_segment_id', 0)
@@ -34,18 +33,15 @@ class ChallengeRepository:
 
         return challenge
 
-    @retry_db_operation(max_retries=3, delay=1)
     def delete_by_id(self, challenge_id: int) -> bool:
         """Delete challenge by ID."""
         deleted_count = self.session.query(Challenge).filter_by(id=challenge_id).delete()
         return deleted_count > 0
 
-    @retry_db_operation(max_retries=3, delay=1)
     def get_by_id(self, challenge_id: int) -> Challenge | None:
         """Get challenge by ID."""
         return self.session.query(Challenge).filter_by(id=challenge_id).first()
 
-    @retry_db_operation(max_retries=3, delay=1)
     def get_current(self) -> Challenge | None:
         """Get current active challenge.
 
@@ -61,7 +57,6 @@ class ChallengeRepository:
             Challenge.end_date >= current_time
         ).first()
 
-    @retry_db_operation(max_retries=3, delay=1)
     def get_by_year(self, year: int) -> list[Challenge]:
         """Get challenges by year."""
         start_of_year = datetime(year, 1, 1, tzinfo=timezone.utc)

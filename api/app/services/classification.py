@@ -1,7 +1,7 @@
 """Classification Service for retrieving the general classification of athletes over a season."""
 from typing import Any, Generator
 
-from app.database import get_db_session, retry_db_operation
+from app.database import get_db_session
 from app.helpers import Gender, TimeSpan
 from app.models.athlete import Athlete
 from app.models.challenge import Challenge
@@ -86,7 +86,6 @@ class ClassificationService:
 
         self._results : dict[int, ClassificationResults] = {}  # Maps athlete_id to classification results for that athlete
 
-    @retry_db_operation(max_retries=3, delay=1)
     def query_from_db(self) -> None:
         """Query the database to populate the service with efforts, athletes, and challenges."""
         session = get_db_session()

@@ -1,7 +1,7 @@
 """Result Service for retrieving results of individual challenges."""
 from typing import Any, Generator, Iterable
 
-from app.database import get_db_session, retry_db_operation
+from app.database import get_db_session
 from app.helpers import Gender
 from app.models.athlete import Athlete
 from app.models.challenge import Challenge
@@ -46,7 +46,6 @@ class ResultService:
         self._challenge_efforts = efforts
         self._participating_athletes = athletes
 
-    @retry_db_operation(max_retries=3, delay=1)
     def query_from_db(self) -> None:
         """Query the database to populate the service for a specific challenge ID
 
