@@ -12,16 +12,9 @@ from sqlalchemy.pool import NullPool
 logger = logging.getLogger(__name__)
 
 # Create database engine optimized for serverless environments
-engine = create_engine(
-    config.DATABASE_URL,
+engine = create_engine(config.DATABASE_URL,
     echo=False,
-    poolclass=NullPool,
-    isolation_level="AUTOCOMMIT",
-    connect_args={
-        "connect_timeout": 5,
-        "application_name": "cora_leaderboard",
-        "options": "-c statement_timeout=10000",
-    }
+    poolclass=NullPool
 )
 
 # Create session factory
