@@ -11,13 +11,12 @@ from sqlalchemy.pool import NullPool
 
 logger = logging.getLogger(__name__)
 
-_db_initialized = False
-
-# NullPool: No connection pooling per instance (for ephemeral functions)
+# Create database engine optimized for serverless environments
 engine = create_engine(
     config.DATABASE_URL,
     echo=False,
     poolclass=NullPool,
+    isolation_level="AUTOCOMMIT",
     connect_args={
         "connect_timeout": 5,
         "application_name": "cora_leaderboard",
@@ -53,14 +52,12 @@ def close_db_session(error=None) -> None:
 
 
 def init_db():
-    """Initialize database tables on startup (called only once)"""
-    global _db_initialized
-
-    if _db_initialized:
-        logger.debug("Database already initialized, skipping")
-        return
+    """Initialize database tables on startup.
+    
+    base.metadata.create_all() is idempotent - it only creates tables that don't exist.
+    Safe to call multiple times on warm container restarts.
+    """
     try:
-
         from app.models import Base
         from app.models.athlete import Athlete
         from app.models.challenge import Challenge
@@ -69,13 +66,7 @@ def init_db():
 
         logger.info("Initializing database tables...")
         Base.metadata.create_all(bind=engine)
-        _db_initialized = True
         logger.info("Database tables initialized successfully")
-
-    except (OperationalError, DisconnectionError) as e:
-        logger.error("Database operation failed: %s", e)
-        raise
-
     except Exception as e:
-        logger.error("Non-recoverable database error: %s", e)
+        logger.error("Failed to initialize database: %s", e)
         raise
