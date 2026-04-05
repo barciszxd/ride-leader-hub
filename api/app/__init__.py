@@ -12,9 +12,9 @@ logger = logging.getLogger(__name__)
 
 def create_app():
     """Create and configure Flask application"""
-    flask_app = Flask(__name__)
+    app = Flask(__name__)
 
-    @flask_app.errorhandler(SQLAlchemyError)
+    @app.errorhandler(SQLAlchemyError)
     def handle_database_error(error):
         """Global database exception handler"""
         logger.error("Database error: %s", error)
@@ -24,31 +24,35 @@ def create_app():
             "details": str(error)
         }), 503
 
-    # Load configuration
-    flask_app.config.from_object(config)
+    app.config.from_object(config)
 
     # Register blueprints
     from app.api.routes import api_bp  # pylint: disable=import-outside-toplevel
 
-    # supports_credentials=True is required so the browser sends the auth_session
-    # HTTP-only cookie with cross-origin requests (SameSite=None in production).
     if config.DEBUG:
-        CORS(flask_app, origins=['http://localhost:8080'], supports_credentials=True)
+        CORS(
+            app,
+            origins=['http://localhost:8080'],
+            supports_credentials=True       # Allow HTTP-only cookies to be sent
+        )
     else:
-        CORS(flask_app, supports_credentials=True)
+        CORS(
+            app,
+            supports_credentials=True      # Allow HTTP-only cookies to be sent
+        )
 
-    flask_app.register_blueprint(api_bp, url_prefix='/api')
+    app.register_blueprint(api_bp, url_prefix='/api')
 
-    return flask_app
+    # Initialize database tables only once at startup (not on every request)
+    init_db()
+
+    # Register session cleanup for each request
+    app.teardown_appcontext(close_db_session)
+
+    return app
 
 
 app = create_app()
-
-# Initialize database tables only once at startup (not on every request)
-init_db()
-
-# Register session cleanup for each request
-app.teardown_appcontext(close_db_session)
 
 if __name__ == '__main__':
     app.run()

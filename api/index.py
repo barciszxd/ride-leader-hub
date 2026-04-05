@@ -1,3 +1,5 @@
+"""API entry point. This file is used to start the Flask application.
+"""
 import sys
 import os
 
