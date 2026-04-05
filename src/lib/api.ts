@@ -61,7 +61,7 @@ class LeaderboardAPI {
     success: boolean; 
     message: string; 
     athlete_created?: boolean; 
-    athlete?: { firstname: string; [key: string]: any } 
+    athlete?: { firstname: string; profile_medium?: string; [key: string]: any } 
   }> {
     const params = new URLSearchParams();
     params.append('code', code);
@@ -73,10 +73,10 @@ class LeaderboardAPI {
       credentials: 'include',
     });
     
-    if (!response.ok) {
-      throw new Error(`Token exchange failed: ${response.status}`);
-    }
-
+    // Parse the body for both success and error responses — the backend always
+    // returns a JSON object with a `success` flag and a `message` field.
+    // Only throw for network-level failures (handled by the outer try/catch in
+    // the caller), not for application-level errors returned as JSON.
     return await response.json();
   }
 

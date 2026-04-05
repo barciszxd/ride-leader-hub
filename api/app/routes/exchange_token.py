@@ -22,12 +22,12 @@ def exchange_token():
     error = request.args.get('error')
 
     if error:
-        return jsonify({"success": False, "error": error}), 400
+        return jsonify({"success": False, "message": "Wir konnten STRAVA nicht erreichen. Probiere es später erneut."}), 400
 
     scopes = scope.split(',') if scope else []
 
     if "activity:read" not in scopes:
-        return jsonify({"success": False, "error": "Missing read access for activities"}), 403
+        return jsonify({"success": False, "message": "Unzureichende Rechte: Leaderboard braucht Zugang zu allen deinen Aktivitäten."}), 403
 
     token_url = "https://www.strava.com/oauth/token"
     token_data = {
@@ -44,7 +44,7 @@ def exchange_token():
         verify  = config.SSL_ENABLE
     )
     if not response.ok:
-        return jsonify({"success": False, "error": "Could not exchange token: STRAVA didn't respond"}), 500
+        return jsonify({"success": False, "message": "Wir konnten STRAVA nicht erreichen. Probiere es später erneut."}), 500
 
     token_data = response.json()
 

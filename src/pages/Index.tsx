@@ -89,11 +89,11 @@ const Index = () => {
             }
           } else {
             setStravaDialogState('error');
-            setStravaMessage(`We couldn't sign you to the leaderboard. ${response.message}`);
+            setStravaMessage(response.message);
           }
         } catch (error) {
           setStravaDialogState('error');
-          setStravaMessage('We couldn\'t sign you to the leaderboard. An unexpected error occurred.');
+          setStravaMessage('Unerwarteter Fehler ist aufgetreten.');
           console.error('Token exchange failed:', error);
         }
       };
