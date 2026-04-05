@@ -33,7 +33,7 @@ def webhook():
     if not data:
         return jsonify({"success": False, "message": "No data received"}), 400
 
-    logger.info("Received webhook data: %s", data)
+    logger.info("Received webhook of type %s with updates: %s", data.get('aspect_type'), data.get('updates', {}))
 
     object_type = data.get('object_type')
     aspect_type = data.get('aspect_type')
@@ -47,7 +47,7 @@ def webhook():
         if aspect_type == 'create':
             effort_added = effort_repo.add(activity_id, athlete_id)
 
-            msg = f"New activity {activity_id} of athlete {athlete_id} registered. "
+            msg = f"New activity ...{str(activity_id)[-3:]} of athlete ...{str(athlete_id)[-3:]} registered. "
 
             if effort_added:
                 msg += "Segment effort added to the database."
@@ -63,18 +63,17 @@ def webhook():
             private = updates.get('private', False)
 
             if private and private == "true":
-                deleted_efforts = effort_repo.delete_efforts_by_activity_id(activity_id)
+                deleted_efforts = effort_repo.delete_efforts_by_activity_id(
+                    activity_id)
 
-                msg = f"Setting activity {activity_id} to private registered. "
+                msg = f"Setting activity ...{str(activity_id)[-3:]} to private registered. "
 
                 msg += f"{deleted_efforts} related efforts were deleted." if deleted_efforts else "No efforts to delete from leaderboard."
 
-                return jsonify({"success": True, "message": msg}), 200
-
-            if private and private == "false":
+            elif private and private == "false":
                 effort_added = effort_repo.add(activity_id, athlete_id)
 
-                msg = f"Setting activity {activity_id} to public registered. "
+                msg = f"Setting activity ...{str(activity_id)[-3:]} to public registered. "
 
                 if effort_added:
                     msg += "Segment effort added to the database."
@@ -83,12 +82,17 @@ def webhook():
                     msg += "No segment effort was added."
                     status_code = 200
 
-                return jsonify({"success": True, "message": msg}), status_code
+            else:
+                msg = f"Activity ...{str(activity_id)[-3:]} update registered. No relevant changes detected."
+                status_code = 200
+
+            return jsonify({"success": True, "message": msg}), status_code
 
         if aspect_type == 'delete':
-            deleted_efforts = effort_repo.delete_efforts_by_activity_id(activity_id)
+            deleted_efforts = effort_repo.delete_efforts_by_activity_id(
+                activity_id)
 
-            msg = f"Deletion of activity {activity_id} registered."
+            msg = f"Deletion of activity ...{str(activity_id)[-3:]} registered."
             msg += f"{deleted_efforts} efforts deleted." if deleted_efforts else "No efforts to delete."
 
             return jsonify({"success": True, "message": msg}), 200
@@ -105,9 +109,10 @@ def webhook():
             # handles the event of athlete deathorizating the application
             if (authorized := updates.get('authorized', False)) and authorized == "false":
                 athlete_deleted = athlete_repo.delete_by_id(athlete_id)
-                deleted_efforts = effort_repo.delete_efforts_by_athlete_id(athlete_id)
+                deleted_efforts = effort_repo.delete_efforts_by_athlete_id(
+                    athlete_id)
 
-                msg = f"Athlete {athlete_id} deauthorized the application. "
+                msg = f"Athlete ...{str(athlete_id)[-3:]} deauthorized the application. "
                 msg += "Athlete record deleted. " if athlete_deleted else "No athlete record to delete. "
                 msg += f"{deleted_efforts} his/her efforts deleted." if deleted_efforts else "No efforts to delete."
 
