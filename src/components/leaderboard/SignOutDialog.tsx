@@ -44,13 +44,13 @@ export const SignOutDialog = ({
   onSuccess,
   onError,
 }: SignOutDialogProps) => {
-  const [mode, setMode]       = useState<SignOutMode>('soft');
+  const [mode, setMode]       = useState<SignOutMode | ''>('');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleConfirm = async () => {
     setIsLoading(true);
     try {
-      await api.signOut(mode === 'hard');
+      await api.signOut(mode === 'hard'); // 'soft' and '' both treated as soft sign-out
       onOpenChange(false);
       onSuccess();
     } catch (err) {
@@ -66,24 +66,22 @@ export const SignOutDialog = ({
       <AlertDialogContent className="sm:max-w-md">
         <AlertDialogHeader>
           <AlertDialogTitle>Leaderboard verlassen</AlertDialogTitle>
-          <AlertDialogDescription>
-            Wähle, wie du das Leaderboard verlassen möchtest. Diese Entscheidung
-            kann nicht rückgängig gemacht werden.
+          <AlertDialogDescription className="text-foreground">
+            Ich will nicht mehr an Leaderboard teilnehmen...
           </AlertDialogDescription>
         </AlertDialogHeader>
 
         {/* Sign-out mode selection */}
         <RadioGroup
           value={mode}
-          onValueChange={(value) => setMode(value as SignOutMode)}
+          onValueChange={(value) => setMode(value as SignOutMode | '')}
           className="gap-4 py-2"
         >
           {/* Soft sign-out — default */}
           <div className="flex items-start gap-3">
             <RadioGroupItem value="soft" id="signout-soft" className="mt-0.5" />
             <Label htmlFor="signout-soft" className="cursor-pointer font-normal leading-snug">
-              Ich will nicht mehr an Leaderboard teilnehmen, will aber, dass
-              meine bisherigen Ergebnisse bleiben
+              aber meine bisherigen Ergebnisse sollen erhalten bleiben
             </Label>
           </div>
 
@@ -91,8 +89,7 @@ export const SignOutDialog = ({
           <div className="flex items-start gap-3">
             <RadioGroupItem value="hard" id="signout-hard" className="mt-0.5" />
             <Label htmlFor="signout-hard" className="cursor-pointer font-normal leading-snug">
-              Ich will nicht mehr an Leaderboard teilnehmen UND will alle meine
-              Ergebnisse löschen
+              und alle meine Daten (inkl. Ergebnisse) sollen <b>permanent</b> gelöscht werden
             </Label>
           </div>
         </RadioGroup>
@@ -104,7 +101,7 @@ export const SignOutDialog = ({
           {/* Confirm — shows spinner during API call */}
           <Button
             variant="destructive"
-            disabled={isLoading}
+            disabled={isLoading || mode === ''}
             onClick={handleConfirm}
           >
             {isLoading ? (

@@ -206,12 +206,7 @@ const Index = () => {
   const [showSignOutDialog, setShowSignOutDialog] = useState(false);
 
   const handleSignOutSuccess = () => {
-    toast({
-      title:       'Tschüss!',
-      description: 'Du hast das Leaderboard verlassen.',
-    });
-    // Give the toast a moment to appear before reloading
-    setTimeout(() => window.location.reload(), 2000);
+    window.location.reload(); // Reload to update UI for signed-out state
   };
 
   const handleSignOutError = (message: string) => {
