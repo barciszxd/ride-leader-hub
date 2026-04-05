@@ -83,9 +83,9 @@ const Index = () => {
               document.cookie = `profile_medium=${encodeURIComponent(profileMedium)}; expires=${expires}; path=/`;
             }
             if (response.athlete_created) {
-              setStravaMessage(`Great to have you onboard, ${firstName}!`);
+              setStravaMessage(`Schön, dass du dabei bist, ${firstName}!`);
             } else {
-              setStravaMessage(`Nice to see you again, ${firstName}!`);
+              setStravaMessage(`Schön, dich wiederzusehen, ${firstName}!`);
             }
           } else {
             setStravaDialogState('error');
