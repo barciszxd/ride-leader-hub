@@ -1,18 +1,18 @@
 """Database connection and session management for Flask application"""
-import functools
 import logging
 
 from config import config
 from flask import g
 from sqlalchemy import create_engine
-from sqlalchemy.exc import DisconnectionError, OperationalError, SQLAlchemyError
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy.pool import NullPool
 
 logger = logging.getLogger(__name__)
 
 # Create database engine optimized for serverless environments
-engine = create_engine(config.DATABASE_URL,
+engine = create_engine(
+    config.DATABASE_URL,
     echo=False,
     poolclass=NullPool
 )
@@ -46,7 +46,7 @@ def close_db_session(error=None) -> None:
 
 def init_db():
     """Initialize database tables on startup.
-    
+
     base.metadata.create_all() is idempotent - it only creates tables that don't exist.
     Safe to call multiple times on warm container restarts.
     """
@@ -57,7 +57,6 @@ def init_db():
         from app.models.effort import Effort
         from app.models.segment import Segment
 
-        logger.info("Initializing database tables...")
         Base.metadata.create_all(bind=engine)
         logger.info("Database tables initialized successfully")
     except Exception as e:

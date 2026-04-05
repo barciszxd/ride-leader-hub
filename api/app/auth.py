@@ -134,8 +134,7 @@ def requires_auth(f):
     """Route decorator that enforces a valid ``auth_session`` cookie.
 
     The wrapped function receives the authenticated ``Athlete`` model instance
-    as its **first positional argument**.  All other route arguments (e.g.
-    URL path parameters) are forwarded unchanged.
+    as its **first positional argument**. All other route arguments are forwarded unchanged.
 
     Returns HTTP 401 when:
     - The cookie is absent.
@@ -156,26 +155,26 @@ def requires_auth(f):
     @wraps(f)
     def decorated(*args, **kwargs):
 
-        # 1. Read cookie -------------------------------------------------
+        # Read cookie
         encrypted = request.cookies.get(config.COOKIE_NAME)
         if not encrypted:
             logger.debug("Auth rejected: no cookie")
             return jsonify({"error": "Authentication required"}), 401
 
-        # 2. Decrypt athlete ID -----------------------------------------
+        # Decrypt athlete ID 
         athlete_id = decrypt_athlete_id(encrypted)
         if athlete_id is None:
             logger.warning("Auth rejected: invalid cookie value")
             return jsonify({"error": "Invalid session"}), 401
 
-        # 3. Load athlete from database ----------------------------------
+        # Load athlete from database
         repo    = AthleteRepository()
         athlete = repo.get_by_id(athlete_id)
         if athlete is None:
             logger.warning("Auth rejected: athlete %d not found in DB", athlete_id)
             return jsonify({"error": "Invalid session"}), 401
 
-        # 4. Ensure we have a valid (possibly refreshed) access token ----
+        # Ensure we have a valid (possibly refreshed) access token ----
         try:
             access_token = repo.get_access_token(athlete_id)
         except http_requests.exceptions.RequestException as exc:
@@ -192,7 +191,7 @@ def requires_auth(f):
         if athlete:
             logger.debug("Auth accepted for athlete %d (%s %s)", athlete_id, athlete.firstname, athlete.lastname)
 
-        # 5. Inject athlete as first positional argument ----------------
+        # Inject athlete as first positional argument
         return f(athlete, *args, **kwargs)
 
     return decorated

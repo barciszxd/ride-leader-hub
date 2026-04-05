@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 import app.services.challenge as challenge_service
 import app.services.segment as segment_service
 
-from app.api.routes import api_bp
+from app.routes import api_bp
 from app.helpers import Gender, TimeSpan
 from app.services.results import ResultService
 from flask import jsonify, request

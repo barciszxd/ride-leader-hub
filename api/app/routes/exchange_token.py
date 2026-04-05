@@ -3,7 +3,7 @@ import logging
 
 import requests
 
-from app.api.routes import api_bp
+from app.routes import api_bp
 from app.auth import set_auth_cookie
 from app.services import athlete as athlete_service
 from config import config

@@ -4,7 +4,7 @@ import logging
 import app.services.athlete as athlete_service
 import app.services.effort as effort_service
 
-from app.api.routes import api_bp
+from app.routes import api_bp
 from config import config
 from flask import jsonify, request
 

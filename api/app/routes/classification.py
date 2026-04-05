@@ -1,6 +1,6 @@
 from datetime import datetime, timezone
 
-from app.api.routes import api_bp
+from app.routes import api_bp
 from app.helpers import Gender, TimeSpan
 from app.services.classification import ClassificationService
 from flask import jsonify, request

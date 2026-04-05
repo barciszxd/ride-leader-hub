@@ -6,7 +6,7 @@ import requests as http_requests
 import app.services.athlete as athlete_service
 import app.services.effort as effort_service
 
-from app.api.routes import api_bp
+from app.routes import api_bp
 from app.auth import clear_auth_cookie, requires_auth
 from app.services.utilities import decrypt_token
 from config import config

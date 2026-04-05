@@ -27,7 +27,7 @@ def create_app():
     app.config.from_object(config)
 
     # Register blueprints
-    from app.api.routes import api_bp  # pylint: disable=import-outside-toplevel
+    from app.routes import api_bp  # pylint: disable=import-outside-toplevel
 
     if config.DEBUG:
         CORS(

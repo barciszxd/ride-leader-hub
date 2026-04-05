@@ -1,6 +1,6 @@
 import app.services.athlete as athlete_service
 
-from app.api.routes import api_bp
+from app.routes import api_bp
 from flask import jsonify
 
 

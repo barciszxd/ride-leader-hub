@@ -1,6 +1,6 @@
 import logging
 
-from app.api.routes import api_bp
+from app.routes import api_bp
 from app.database import get_db_session
 from flask import jsonify
 from sqlalchemy import text
