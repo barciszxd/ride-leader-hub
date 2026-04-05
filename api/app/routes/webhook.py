@@ -22,7 +22,7 @@ def subscription_callback():
     if verify_token == config.STRAVA_VERIFY_TOKEN:
         return jsonify({"success": True, "hub.challenge": challenge}), 200
 
-    return jsonify({"success": False, "error": "Bad request"}), 403
+    return jsonify({"success": False, "message": "Bad request"}), 403
 
 
 @api_bp.post('/webhook')
@@ -31,7 +31,7 @@ def webhook():
     data = request.get_json()
 
     if not data:
-        return jsonify({"success": False, "error": "No data received"}), 400
+        return jsonify({"success": False, "message": "No data received"}), 400
 
     logger.info("Received webhook data: %s", data)
 
@@ -93,7 +93,7 @@ def webhook():
 
             return jsonify({"success": True, "message": msg}), 200
 
-        return jsonify({"success": False, "error": "Unsupported aspect type for activity"}), 400
+        return jsonify({"success": False, "message": "Unsupported aspect type for activity"}), 400
 
     # handle athlete-related events
     if object_type == 'athlete':
@@ -113,6 +113,6 @@ def webhook():
 
                 return jsonify({"success": True, "message": msg}), 200
 
-        return jsonify({"success": False, "error": "Unsupported aspect type for athlete"}), 400
+        return jsonify({"success": False, "message": "Unsupported aspect type for athlete"}), 400
 
-    return jsonify({"success": False, "error": "Unsupported object type"}), 400
+    return jsonify({"success": False, "message": "Unsupported object type"}), 400

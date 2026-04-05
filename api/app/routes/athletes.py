@@ -11,7 +11,7 @@ def get_athletes():
     athletes = athlete_repo.get_all()
 
     if not athletes:
-        return jsonify({"success": False, "error": "No athletes found"}), 404
+        return jsonify({"success": False, "message": "No athletes found"}), 404
 
     # Convert athletes to a list of dictionaries
 

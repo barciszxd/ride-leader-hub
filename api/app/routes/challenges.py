@@ -16,12 +16,12 @@ def create_challenge():
     data = request.json
 
     if not data:
-        return jsonify({"success": False, "error": "No data provided"}), 400
+        return jsonify({"success": False, "message": "No data provided"}), 400
 
     challenge_repo = challenge_service.ChallengeRepository()
 
     if challenge_repo.add(data) is None:
-        return jsonify({"success": False, "error": "Failed to create challenge"}), 400
+        return jsonify({"success": False, "message": "Failed to create challenge"}), 400
 
     return jsonify({"success": True, "message": "Challenge created successfully."}), 201
 
@@ -38,7 +38,7 @@ def get_challenges():
     challenges = challenge_repo.get_by_year(year)
 
     if not challenges:
-        return jsonify({"success": False, "error": "No challenges found"}), 404
+        return jsonify({"success": False, "message": "No challenges found"}), 404
     # Convert challenges to a list of dictionaries
 
     segment_repo = segment_service.SegmentRepository()
@@ -79,7 +79,7 @@ def get_challenge_by_id(challenge_id):
     challenge = challenge_repo.get_by_id(challenge_id)
 
     if not challenge:
-        return jsonify({"success": False, "error": "Challenge not found"}), 404
+        return jsonify({"success": False, "message": "Challenge not found"}), 404
 
     segments = segment_service.SegmentRepository().get_for_challenge(challenge)
 
@@ -113,16 +113,16 @@ def get_challenge_results(challenge_id):
     gender = request.args.get('gender')
 
     if segment_type and segment_type not in ['climb', 'sprint']:
-        return jsonify({"success": False, "error": "Invalid or no segment type"}), 400
+        return jsonify({"success": False, "message": "Invalid or no segment type"}), 400
 
     if gender and gender not in Gender.values():
-        return jsonify({"success": False, "error": "Invalid or no gender"}), 400
+        return jsonify({"success": False, "message": "Invalid or no gender"}), 400
 
     try:
         result_service = ResultService(challenge_id)
         result_service.query_from_db()
     except ValueError as e:
-        return jsonify({"success": False, "error": str(e)}), 404
+        return jsonify({"success": False, "message": str(e)}), 404
 
     segment_types = [segment_type] if segment_type else ['climb', 'sprint']
     genders = [gender] if gender else Gender.values()

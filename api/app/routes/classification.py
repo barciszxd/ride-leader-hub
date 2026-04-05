@@ -15,7 +15,7 @@ def get_classification():
         year = datetime.now(timezone.utc).year
 
     if gender and gender not in Gender.values():
-        return jsonify({"success": False, "error": "Invalid or no gender"}), 400
+        return jsonify({"success": False, "message": "Invalid or no gender"}), 400
 
     genders = [Gender(gender)] if gender else Gender
 
