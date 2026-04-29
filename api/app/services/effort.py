@@ -119,12 +119,22 @@ class EffortFilter:
         """Check if the effort matches the challenge filter criteria."""
 
         effort_segment_id: int | None = effort_data.get('segment', {}).get('id')
-        effort_start_date: datetime | None = effort_data.get('start_date')
+        effort_start_date_str: str | None = effort_data.get('start_date')
+        
+        # Parse ISO 8601 string to datetime object
+        if not effort_start_date_str:
+            return False
+        
+        try:
+            # Replace 'Z' with '+00:00' for Python's fromisoformat compatibility
+            effort_start_date = datetime.fromisoformat(effort_start_date_str.replace('Z', '+00:00'))
+        except (ValueError, AttributeError):
+            return False
 
         if not effort_segment_id or effort_segment_id not in self._segment_ids:
             return False
 
-        if not effort_start_date or effort_start_date not in self._challenge_timespan:
+        if effort_start_date not in self._challenge_timespan:
             return False
 
         return True
