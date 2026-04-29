@@ -99,3 +99,5 @@ dist-ssr
 
 # Vercel
 *.vercel
+
+.tmp/
