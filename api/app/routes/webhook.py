@@ -84,15 +84,24 @@ def webhook():
                     status_code = 200
 
             else:
-                msg = f"Activity ...{str(activity_id)[-3:]} update registered. No relevant changes detected."
-                status_code = 200
+                # Since STRAVA sometimes doesn't send create webhook events for new activities,
+                # we also handle updates that don't involve privacy changes as potential new activities.
+                effort_added = effort_repo.add(activity_id, athlete_id)
+
+                msg = f"Activity ...{str(activity_id)[-3:]} update registered."
+
+                if effort_added:
+                    msg += " Segment effort added to the database."
+                    status_code = 201
+                else:
+                    msg += " No segment effort was added."
+                    status_code = 200
 
         elif aspect_type == 'delete':
-            deleted_efforts = effort_repo.delete_efforts_by_activity_id(
-                activity_id)
+            deleted_efforts = effort_repo.delete_efforts_by_activity_id(activity_id)
 
             msg = f"Deletion of activity ...{str(activity_id)[-3:]} registered."
-            msg += f" {deleted_efforts} efforts deleted." if deleted_efforts else "No efforts to delete."
+            msg += f" {deleted_efforts} efforts deleted." if deleted_efforts else " No efforts to delete."
             status_code = 200
 
         else:
